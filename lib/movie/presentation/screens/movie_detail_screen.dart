@@ -3,15 +3,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_app/core/utilies/appStrings.dart';
 import 'package:movie_app/core/utilies/constants.dart';
-import 'package:movie_app/movie/presentation/controllers/movie_details_bloc.dart';
+import 'package:movie_app/movie/presentation/controllers/cast/cast_bloc.dart';
+import 'package:movie_app/movie/presentation/screens/movies_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/services/service_locator.dart';
+import '../../../core/utilies/colors.dart';
 import '../../../core/utilies/enum.dart';
+import '../../../core/utilies/values_manger.dart';
 import '../../domain/entities/genres.dart';
-import '../controllers/movie_details_event.dart';
-import '../controllers/movie_details_state.dart';
+import '../controllers/movieDetails/movie_details_bloc.dart';
+import '../controllers/movieDetails/movie_details_event.dart';
+import '../controllers/movieDetails/movie_details_state.dart';
+import '../widgets/movieDetails/castShow.dart';
+import '../widgets/movieDetails/showRecommendation.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final int id;
@@ -20,209 +27,373 @@ class MovieDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<MovieDetailsBloc>()
-        ..add(GetMovieDetailsEvent(id))
-        ..add(
-          GetMovieRecommendationEvent(id),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<MovieDetailsBloc>()
+            ..add(GetMovieDetailsEvent(id))
+            ..add(
+              GetMovieRecommendationEvent(id),
+            ),
+
         ),
-      child: const Scaffold(
-        body: MovieDetailContent(),
+        BlocProvider(create: (context)=>sl<CastBloc>()..add(GetCastEvent(id)))
+      ],
+      child:  Scaffold(
+        body: MovieDetailContent(id:id),
       ),
     );
   }
 }
 
 class MovieDetailContent extends StatelessWidget {
+  final int id;
   const MovieDetailContent({
-    Key? key,
+    Key? key,required this.id
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-
         builder: (context, state) {
+      switch (state.movieDetailsState) {
+        case RequestState.loading:
+          return const SizedBox(
+            height: AppSize.s400,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
 
-
-
-          switch(state.movieDetailsState){
-
-            case RequestState.loading:
-              return const SizedBox(
-                height: 400,
-                child: Center(child: CircularProgressIndicator(),),
-              );
-
-            case RequestState.loaded:
-              return  CustomScrollView(
-                key: const Key('movieDetailScrollView'),
-                slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    expandedHeight: 250.0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: FadeIn(
-                        duration: const Duration(milliseconds: 500),
-                        child: ShaderMask(
-                          shaderCallback: (rect) {
-                            return const LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.transparent,
-                                Colors.black,
-                                Colors.black,
-                                Colors.transparent,
-                              ],
-                              stops: [0.0, 0.5, 1.0, 1.0],
-                            ).createShader(
-                              Rect.fromLTRB(0.0, 0.0, rect.width, rect.height),
-                            );
-                          },
-                          blendMode: BlendMode.dstIn,
-                          child: CachedNetworkImage(
-                            width: MediaQuery.of(context).size.width,
-                            imageUrl:
-                            AppConstants.imageUrl(state.movieDetails!.backdropPath),
-                            fit: BoxFit.cover,
-                          ),
+        case RequestState.loaded:
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MoviesScreen()));
+                    },
+                    icon: const Icon(Icons.arrow_back_ios)),
+                pinned: true,
+                expandedHeight: AppSize.s250,
+                flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.pin,
+                  background: CachedNetworkImage(
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[850]!,
+                      highlightColor: Colors.grey[800]!,
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(AppSize.s8),
                         ),
                       ),
                     ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    imageUrl:
+                        AppConstants.imageUrl(state.movieDetails!.backdropPath),
                   ),
-                  SliverToBoxAdapter(
-                    child: FadeInUp(
-                      from: 20,
-                      duration: const Duration(milliseconds: 500),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(state.movieDetails!.title,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSize.s16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(state.movieDetails!.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.poppins(
                                   fontSize: 23,
                                   fontWeight: FontWeight.w700,
-                                  letterSpacing: 1.2,
+                                  letterSpacing: AppSize.s1_2,
                                 )),
-                            const SizedBox(height: 8.0),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 2.0,
-                                    horizontal: 8.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[800],
-                                    borderRadius: BorderRadius.circular(4.0),
-                                  ),
-                                  child: Text(
-                                    state.movieDetails!.releaseDate.split('-')[0],
-                                    style: const TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 16.0),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 20.0,
-                                    ),
-                                    const SizedBox(width: 4.0),
-                                    Text(
-                                      (state.movieDetails!.voteAverage / 2)
-                                          .toStringAsFixed(1),
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 1.2,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4.0),
-                                    Text(
-                                      '(${state.movieDetails!.voteAverage})',
-                                      style: const TextStyle(
-                                        fontSize: 1.0,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 1.2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(width: 16.0),
-                                Text(
-                                  _showDuration(state.movieDetails!.runtime),
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
-                                ),
-                              ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: AppSize.s2,
+                              horizontal: AppSize.s8,
                             ),
-                            const SizedBox(height: 20.0),
-                            Text(
-                              state.movieDetails!.overView,
-                              style: const TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 1.2,
-                              ),
+                            decoration: BoxDecoration(
+                              color: AppColors.red,
+                              borderRadius: BorderRadius.circular(AppSize.s4),
                             ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              'Genres: ${_showGenres(state.movieDetails!.genres)}',
+                            child: Text(
+                              state.movieDetails!.status,
                               style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12.0,
+                                color: AppColors.white,
+                                fontSize: AppSize.s16,
                                 fontWeight: FontWeight.w500,
-                                letterSpacing: 1.2,
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSize.s8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: AppSize.s2,
+                                  horizontal: AppSize.s8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: AppColors.softGrey,
+                                  borderRadius:
+                                      BorderRadius.circular(AppSize.s4),
+                                ),
+                                child: Text(
+                                  state.movieDetails!.releaseDate
+                                      .split('-')[AppSize.s0.toInt()],
+                                  style: const TextStyle(
+                                    color: AppColors.white,
+                                    fontSize: AppSize.s16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: AppSize.s20,
+                              ),
+                              Text(
+                                " ${state.movieDetails!.voteAverage.toInt()}/10",
+                                style: const TextStyle(
+                                  fontSize: AppSize.s16,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: AppSize.s1_2,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "${state.movieDetails!.voteCount} Votes",
+                            style: const TextStyle(
+                              fontSize: AppSize.s16,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: AppSize.s1_2,
+                            ),
+                          ),
+                          Text(
+                            _showDuration(state.movieDetails!.runtime),
+                            style: const TextStyle(
+                              fontSize: AppSize.s16,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: AppSize.s1_2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: AppSize.s10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (state.movieDetails!.budget == 0)
+                            const Text(
+                              AppStrings.noBudget,
+                              style: TextStyle(
+                                fontSize: AppSize.s16,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: AppSize.s1_2,
+                              ),
+                            ),
+                          if (state.movieDetails!.budget > 0)
+                            Text(
+                              "${AppStrings.budget}${state.movieDetails!.budget} \$",
+                              style: const TextStyle(
+                                fontSize: AppSize.s16,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: AppSize.s1_2,
+                              ),
+                            ),
+                          if (state.movieDetails!.adult == true)
+                            const Text(
+                              AppStrings.eighteen,
+                              style: TextStyle(
+                                color: AppColors.red,
+                                fontSize: AppSize.s16,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: AppSize.s1_2,
+                              ),
+                            ),
+                          if (state.movieDetails!.adult == false)
+                            const Text(
+                              AppStrings.twelve,
+                              style: TextStyle(
+                                fontSize: AppSize.s16,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: AppSize.s1_2,
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSize.s10),
+                      if (state.movieDetails!.budget == 0)
+
+                        const Text(
+                        "${AppStrings.revenue}${AppStrings.noRevenue}",
+                        style: TextStyle(
+                          fontSize: AppSize.s16,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: AppSize.s1_2,
                         ),
                       ),
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 24.0),
-                    sliver: SliverToBoxAdapter(
-                      child: FadeInUp(
-                        from: 20,
-                        duration: const Duration(milliseconds: 500),
-                        child: Text(
-                          'More like this'.toUpperCase(),
+                      if (state.movieDetails!.budget > 0)
+                        Text(
+                          "${AppStrings.revenue}${state.movieDetails!.revenue}\$",
                           style: const TextStyle(
-                            fontSize: 16.0,
+                            fontSize: AppSize.s16,
                             fontWeight: FontWeight.w500,
-                            letterSpacing: 1.2,
+                            letterSpacing: AppSize.s1_2,
+                          ),
+                        ),
+                      const SizedBox(height: AppSize.s10),
+                      if(state.movieDetails!.company.isNotEmpty)
+                        Text(
+                        "${AppStrings.country}${state.movieDetails!.company[0].originCountry}",
+                        style: const TextStyle(
+                          fontSize: AppSize.s16,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: AppSize.s1_2,
+                        ),
+                      ),
+                      const SizedBox(height: AppSize.s10),
+                      Text(
+                        state.movieDetails!.overView,
+                        style: const TextStyle(
+                          fontSize: AppSize.s18,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: AppSize.s1_2,
+                        ),
+                      ),
+                      const SizedBox(height: AppSize.s8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSize.s2,
+                          horizontal: AppSize.s8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.softGrey,
+                          borderRadius: BorderRadius.circular(AppSize.s4),
+                        ),
+                        child: Text(
+                          _showGenres(state.movieDetails!.genres),
+                          style: const TextStyle(
+                            fontSize: AppSize.s20,
+                            color: AppColors.white,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: AppSize.s1_2,
                           ),
                         ),
                       ),
+                      const SizedBox(height: AppSize.s15),
+                      if(state.movieDetails!.company.isNotEmpty)
+                      Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(color: AppColors.grey, width: 2),),
+                            child: const Text(
+                              AppStrings.production,
+                              style: TextStyle(
+                                fontSize: AppSize.s18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: AppSize.s1_2,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: AppSize.s100,
+                              child: ListView.separated(
+                                    separatorBuilder: (context,index)=>const SizedBox(height: AppSize.s3,),
+                                    padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) => Text(
+                                  state.movieDetails!.company[index].name,
+                                  style: const TextStyle(
+                                    fontSize: AppSize.s16,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: AppSize.s1_2,
+                                  ),
+                                ),
+                                itemCount: state.movieDetails!.company.length,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSize.s8),
+                      const Text(
+                        AppStrings.cast,
+                        style: TextStyle(
+                          fontSize: AppSize.s20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: AppSize.s1_2,
+                        ),
+                      ),
+                      const SizedBox(height: AppSize.s8),
+                       ShowCast(id:id),
+                    ],
+                  ),
+                ),
+              ),
+              if(state.movieRecommendation.isNotEmpty)
+
+                SliverPadding(
+                padding: const EdgeInsets.fromLTRB(
+                    AppSize.s16, AppSize.s16, AppSize.s16, AppSize.s24),
+                sliver: SliverToBoxAdapter(
+                  child: FadeInUp(
+                    from: 20,
+                    duration: Duration(milliseconds: AppSize.s500.toInt()),
+                    child: const Text(
+                      AppStrings.moreLikeThis,
+                      style: TextStyle(
+                        fontSize: AppSize.s16,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: AppSize.s1_2,
+                      ),
                     ),
                   ),
-                  // Tab(text: 'More like this'.toUpperCase()),
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 24.0),
-                    sliver: _showRecommendations(),
-                  ),
-                ],
-              );
-            case RequestState.error:
-              return  SizedBox(
-                height: 400,
-                child: Center(child: Text(state.movieDetailsMessage),),
-              );
+                ),
+              ),
+              if(state.movieRecommendation.isNotEmpty)
 
-          }
-
+                const SliverPadding(
+                padding: EdgeInsets.fromLTRB(
+                    AppSize.s16, AppSize.s0, AppSize.s16, AppSize.s24),
+                sliver: ShowRecommendation(),
+              ),
+            ],
+          );
+        case RequestState.error:
+          return SizedBox(
+            height: AppSize.s400,
+            child: Center(
+              child: Text(state.movieDetailsMessage),
+            ),
+          );
+      }
     });
   }
 
@@ -236,61 +407,19 @@ class MovieDetailContent extends StatelessWidget {
       return result;
     }
 
-    return result.substring(0, result.length - 2);
+    return result.substring(0, result.length - AppSize.s2.toInt());
   }
 
   String _showDuration(int runtime) {
-    final int hours = runtime ~/ 60;
-    final int minutes = runtime % 60;
+    final int hours = runtime ~/ AppSize.s60;
+    final int minutes = runtime % AppSize.s60.toInt();
 
-    if (hours > 0) {
+    if (hours > AppSize.s0) {
       return '${hours}h ${minutes}m';
     } else {
       return '${minutes}m';
     }
   }
 
-  Widget _showRecommendations() {
-    return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-      builder: (context, state) => SliverGrid(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final recommendation = state.movieRecommendation[index];
-            return FadeInUp(
-              from: 20,
-              duration: const Duration(milliseconds: 500),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                child: CachedNetworkImage(
-                  imageUrl: AppConstants.imageUrl(recommendation.backdropPath!),
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey[850]!,
-                    highlightColor: Colors.grey[800]!,
-                    child: Container(
-                      height: 170.0,
-                      width: 120.0,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  height: 180.0,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            );
-          },
-          childCount: state.movieRecommendation.length,
-        ),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
-          childAspectRatio: 0.7,
-          crossAxisCount: 3,
-        ),
-      ),
-    );
-  }
+
 }

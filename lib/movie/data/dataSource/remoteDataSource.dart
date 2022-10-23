@@ -5,14 +5,19 @@ import 'package:movie_app/core/utilies/constants.dart';
 import 'package:movie_app/movie/data/models/movieDetailsModel.dart';
 import 'package:movie_app/movie/data/models/movieModel.dart';
 import 'package:movie_app/movie/data/models/recommendationModel.dart';
+import 'package:movie_app/movie/domain/useCase/getCastUseCase.dart';
 import 'package:movie_app/movie/domain/useCase/movieDetails_useCase.dart';
 import 'package:movie_app/movie/domain/useCase/movieRecommendation_useCase.dart';
+
+import '../models/castModel.dart';
 
 abstract class BaseMovieRemoteDataSource{
   Future<List<MovieModel>> getNowPlayingMovies();
   Future<List<MovieModel>> getPopularPlaying();
   Future<List<MovieModel>> getTopRatedMovie();
+  Future<List<MovieModel>> getUpComingMovie();
   Future<MovieDetailsModel> getMovieDetails(MovieDetailsParameter parameter);
+  Future<List<MovieCastModel>> getMovieCast(MovieCastParameter parameter);
   Future<List<RecommendationsModel>> getMovieRecommendation(MovieRecoParameter parameter);
 }
 
@@ -60,6 +65,21 @@ else
   }
 
   @override
+  Future<List<MovieModel>> getUpComingMovie() async{
+    final response = await Dio().get(AppConstants.getUpComingMoviePath);
+
+    if(response.statusCode== 200){
+
+      return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
+    }
+    else
+    {
+
+      throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(response.data),);
+    }
+  }
+
+  @override
   Future<MovieDetailsModel> getMovieDetails(MovieDetailsParameter parameter) async{
     final response = await Dio().get(AppConstants.getMovieDetailsPath(parameter.id));
 
@@ -85,5 +105,20 @@ else
     throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(response.data),);
     }
   }
+
+  @override
+  Future<List<MovieCastModel>> getMovieCast(MovieCastParameter parameter) async{
+    final response = await Dio().get(AppConstants.movieCast(parameter.id));
+    if(response.statusCode== 200){
+
+      return List<MovieCastModel>.from(
+          response.data['cast'].map((e) => MovieCastModel.fromJson(e)));    }
+    else
+    {
+      throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(response.data),);
+    }
+  }
+
+
 
 }

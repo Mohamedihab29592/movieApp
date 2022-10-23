@@ -1,93 +1,154 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_app/movie/presentation/controllers/bloc.dart';
-import 'package:movie_app/movie/presentation/controllers/blocEvents.dart';
+import 'package:movie_app/core/utilies/appStrings.dart';
+import 'package:movie_app/movie/presentation/controllers/mainScreen/bloc.dart';
+import 'package:movie_app/movie/presentation/controllers/mainScreen/blocStates.dart';
+import 'package:movie_app/movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
 
-import '../../../core/services/service_locator.dart';
-import '../widgets/nowPlayingWidget.dart';
-import '../widgets/popularWidget.dart';
-import '../widgets/topRelatedWidget.dart';
+import '../../../core/utilies/values_manger.dart';
+import '../widgets/movieScreen/nowPlayingWidget.dart';
+import '../widgets/movieScreen/seeMoreWidget.dart';
+import '../widgets/movieScreen/popularWidget.dart';
+import '../widgets/movieScreen/topRelatedWidget.dart';
+import '../widgets/movieScreen/upcomingWidgets.dart';
 
 class MoviesScreen extends StatelessWidget {
   const MoviesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(slivers: [
+        SliverAppBar(
 
-    return BlocProvider(
-      create: (context) => sl<MovieBloc>()..add(GetNowPlayingMoviesEvent())..add(GetPopularMoviesEvent())..add(GetTopRatedMoviesEvent()),
-      child: Scaffold(
-        body: SingleChildScrollView(
-          key: const Key('movieScrollView'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  ThemeModeCubit.get(context).changeAppMode();
+                },
+                icon: const Icon(Icons.dark_mode))
+          ],
+          pinned: true,
+          expandedHeight: 530,
+          flexibleSpace: FlexibleSpaceBar(
+            background: FadeIn(
+              duration: Duration(milliseconds: AppSize.s500.toInt()),
+              child: const NowPlayingWidget(),
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const NowPlayingWidget(),
-              Container(
-                margin: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 8.0),
+              Padding(
+                padding: const EdgeInsets.all(AppSize.s10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Popular",
+                      AppStrings.popular,
                       style: GoogleFonts.poppins(
-                        fontSize: 19,
+                        fontSize: AppSize.s20,
                         fontWeight: FontWeight.w500,
-                        letterSpacing: 0.15,
+                        letterSpacing: AppSize.s0_5,
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        /// TODO : NAVIGATION TO POPULAR SCREEN
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: const [
-                            Text('See More'),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.0,
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                     BlocBuilder<MovieBloc,MovieState>(builder: (context,state)=> SeeMoreWidget(title: AppStrings.popularMovies, widgetState: state.popularState, listLength: state.popularMovies.length, movieList: state.popularMovies, movieMessage: state.popularMessage,))
                             )
-                          ],
-                        ),
+                        );
+                      },
+                      child: Row(
+                        children: const [
+                          Text(AppStrings.seeMore),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: AppSize.s16,
+                          )
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
               const PopularWidget(),
-              Container(
-                margin: const EdgeInsets.fromLTRB(
-                  16.0,
-                  24.0,
-                  16.0,
-                  8.0,
-                ),
+              Padding(
+                padding: const EdgeInsets.all(AppSize.s10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Top Rated",
+                      AppStrings.topRated,
                       style: GoogleFonts.poppins(
-                        fontSize: 19,
+                        fontSize: AppSize.s20,
                         fontWeight: FontWeight.w500,
-                        letterSpacing: 0.15,
+                        letterSpacing: AppSize.s0_5,
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        /// TODO : NAVIGATION TO Top Rated Movies Screen
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                            BlocBuilder<MovieBloc,MovieState>(builder: (context,state)=> SeeMoreWidget(title: AppStrings.topRatedMovies, widgetState: state.topRatedState, listLength: state.topRatedMovies.length, movieList: state.topRatedMovies, movieMessage: state.topRatedMessage,))
+                            ));
                       },
+                      child: Row(
+                        children: const [
+                          Text(
+                            AppStrings.seeMore,
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios,
+                            size: AppSize.s16,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const TopRelatedWidget(),
+              Padding(
+                padding: const EdgeInsets.all(AppSize.s10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppStrings.upComing,
+                      style: GoogleFonts.poppins(
+                        fontSize: AppSize.s20,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: AppSize.s0_5,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                            BlocBuilder<MovieBloc,MovieState>(builder: (context,state)=> SeeMoreWidget(title: AppStrings.upComingMovies, widgetState: state.upComingState, listLength: state.upComingMovies.length, movieList: state.upComingMovies, movieMessage: state.upComingMessage,))));
+                                },
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(AppSize.s8),
                         child: Row(
                           children: const [
-                            Text('See More'),
+                            Text(
+                              AppStrings.seeMore,
+                            ),
                             Icon(
                               Icons.arrow_forward_ios,
-                              size: 16.0,
+                              size: AppSize.s16,
                             )
                           ],
                         ),
@@ -96,12 +157,12 @@ class MoviesScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const TopRelatedWidget(),
-              const SizedBox(height: 50.0),
+              const UpComingWidget(),
+              const SizedBox(height: AppSize.s50),
             ],
           ),
         ),
-      ),
+      ]),
     );
   }
 }

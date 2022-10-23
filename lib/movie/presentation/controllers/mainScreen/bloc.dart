@@ -6,21 +6,24 @@ import 'package:movie_app/core/utilies/enum.dart';
 import 'package:movie_app/movie/domain/useCase/getPopularPlaying_useCase.dart';
 import 'package:movie_app/movie/domain/useCase/getTopRated_useCase.dart';
 import 'package:movie_app/movie/domain/useCase/nowPlaying_useCase.dart';
-import 'package:movie_app/movie/presentation/controllers/blocEvents.dart';
-import 'package:movie_app/movie/presentation/controllers/blocStates.dart';
+
+import '../../../domain/useCase/upComingUseCase.dart';
+import 'blocEvents.dart';
+import 'blocStates.dart';
 
 class MovieBloc extends Bloc<MovieEvents, MovieState> {
   final GetNowPlayingUseCase getNowPlayingUseCase;
   final GetPopularPlayingUseCase getPopularUseCase;
   final GetTopRatedUseCase getTopRatedUseCase;
+  final GetUpComingUseCase getUpComingUseCase;
 
   MovieBloc(this.getNowPlayingUseCase, this.getPopularUseCase,
-      this.getTopRatedUseCase)
+      this.getTopRatedUseCase, this.getUpComingUseCase)
       : super(const MovieState()) {
     on<GetNowPlayingMoviesEvent>(_getNowPlayingMovies);
     on<GetPopularMoviesEvent>(_getPopularMovies);
-
     on<GetTopRatedMoviesEvent>(_getTopRatedMovies);
+    on<GetUpComingMoviesEvent>(_getUpComingMovies);
   }
 
   FutureOr<void> _getNowPlayingMovies(GetNowPlayingMoviesEvent event, Emitter<MovieState> emit) async {
@@ -53,4 +56,16 @@ class MovieBloc extends Bloc<MovieEvents, MovieState> {
               topRatedState: RequestState.loaded,
             )));
   }
+
+  FutureOr<void>  _getUpComingMovies(GetUpComingMoviesEvent event, Emitter<MovieState> emit) async {
+    final result = await getUpComingUseCase(const NoParameters());
+    result.fold(
+            (l) => emit(state.copyWith(
+            upComingState: RequestState.error, upComingMessage: l.message)),
+            (r) => emit(state.copyWith(
+          upComingMovies: r,
+          upComingState: RequestState.loaded,
+        )));
+  }
+
 }

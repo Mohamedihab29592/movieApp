@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:movie_app/core/error/faliure.dart';
+import 'package:movie_app/movie/domain/entities/cast.dart';
 import 'package:movie_app/movie/domain/entities/movie.dart';
 import 'package:movie_app/movie/domain/entities/movies_detail.dart';
 import 'package:movie_app/movie/domain/entities/recommendation.dart';
 import 'package:movie_app/movie/domain/repository/movieRepositry.dart';
+import 'package:movie_app/movie/domain/useCase/getCastUseCase.dart';
 import 'package:movie_app/movie/domain/useCase/movieDetails_useCase.dart';
 import 'package:movie_app/movie/domain/useCase/movieRecommendation_useCase.dart';
 
@@ -42,6 +44,15 @@ class MovieRepository extends BaseMovieRepository{
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+  @override
+  Future<Either<Failure, List<Movie>>> getUpComingMovie() async{
+    final result = await baseMovieRemoteDataSource.getUpComingMovie();
+    try {
+      return Right(result);
+    }on ServerExceptions catch (failure){
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
 
   @override
   Future<Either<Failure, MovieDetails>> getMovieDetails(MovieDetailsParameter parameter) async{
@@ -63,5 +74,19 @@ class MovieRepository extends BaseMovieRepository{
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Cast>>> getMovieCast(MovieCastParameter parameter) async{
+    final result = await baseMovieRemoteDataSource.getMovieCast(parameter);
+    try {
+      return Right(result);
+    }on ServerExceptions catch (failure){
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
+
+
+
+
 
 }
