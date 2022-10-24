@@ -17,11 +17,13 @@ import '../widgets/movieScreen/upcomingWidgets.dart';
 class MoviesScreen extends StatelessWidget {
   const MoviesScreen({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(slivers: [
         SliverAppBar(
+
 
           actions: [
             IconButton(
@@ -31,7 +33,7 @@ class MoviesScreen extends StatelessWidget {
                 icon: const Icon(Icons.dark_mode))
           ],
           pinned: true,
-          expandedHeight: 530,
+          expandedHeight: 575,
           flexibleSpace: FlexibleSpaceBar(
             background: FadeIn(
               duration: Duration(milliseconds: AppSize.s500.toInt()),
@@ -166,3 +168,5 @@ class MoviesScreen extends StatelessWidget {
     );
   }
 }
+
+

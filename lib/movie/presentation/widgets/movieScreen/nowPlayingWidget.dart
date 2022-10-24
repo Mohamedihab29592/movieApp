@@ -32,9 +32,9 @@ class NowPlayingWidget extends StatelessWidget {
                 Expanded(
                   child: CarouselSlider(
                     options: CarouselOptions(
-                      height: 900,
-                      autoPlay: true,
-                      viewportFraction: AppSize.s1,
+                      height: MediaQuery.of(context).size.height,
+                      autoPlay: false,
+                      viewportFraction: 1,
 
                     ),
                     items: state.nowPlayingMovies.map(
@@ -58,13 +58,14 @@ class NowPlayingWidget extends StatelessWidget {
                                   Colors.black,
                                   Colors.transparent,
                                 ],
-                                stops: [0, 0.3, 0.5, 1],
+                                stops: [0, 0.3, 1, 1],
                               ).createShader(
                                 Rect.fromLTRB(0, 0, rect.width, rect.height),
                               );
                             },
                             blendMode: BlendMode.dstIn,
                             child: CachedNetworkImage(
+
                               width: double.infinity,
                               placeholder: (context, url) => Shimmer.fromColors(
                                 baseColor: Colors.grey[850]!,
@@ -89,7 +90,6 @@ class NowPlayingWidget extends StatelessWidget {
                     ).toList(),
                   ),
                 ),
-                const SizedBox(height: AppSize.s10,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:    [

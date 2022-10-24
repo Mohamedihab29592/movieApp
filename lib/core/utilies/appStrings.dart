@@ -1,4 +1,5 @@
 class AppStrings{
+  ///Movie Module
   static const String appName = "Movie App";
   static const String noRouteFound = "No Data Found !!!";
   static const String nowPlaying = "NOW PLAYING MOVIES";
@@ -22,3 +23,5 @@ class AppStrings{
   static const String eighteen = '18+ ';
   static const String twelve = '12+ ';
 }
+
+///Tv Module

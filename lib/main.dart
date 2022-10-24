@@ -6,6 +6,7 @@ import 'package:movie_app/core/services/service_locator.dart';
 import 'package:movie_app/movie/presentation/screens/movies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/error/internetCheck.dart';
 import 'core/utilies/appStrings.dart';
 import 'core/utilies/themes.dart';
 import 'core/utilies/toast.dart';
@@ -16,14 +17,7 @@ import 'movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  bool result = await InternetConnectionChecker().hasConnection;
-  if (result == false) {
-    showToast(text: AppStrings.noInternet, state: ToastStates.error);
-  } else {
-
-
-  }
-
+  await InternetCheck().checkInternet();
   final sharedPreferences = await SharedPreferences.getInstance();
   bool? isDarkMode = sharedPreferences.getBool("isDarkMode") ?? false;
   SystemChrome.setSystemUIOverlayStyle(

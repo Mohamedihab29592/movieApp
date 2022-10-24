@@ -18,9 +18,10 @@ class ThemeModeCubit extends Cubit<ThemeModeState> {
       isDarkMode = !isDarkMode;
       final sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setBool('isDarkMode',  isDarkMode).then((value) {
+        emit(ChangeAppModeSuccess());
+
       });
     }
-    emit(ChangeAppModeSuccess());
   }
 }
 

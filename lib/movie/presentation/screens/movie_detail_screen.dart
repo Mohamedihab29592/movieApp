@@ -9,6 +9,7 @@ import 'package:movie_app/movie/presentation/controllers/cast/cast_bloc.dart';
 import 'package:movie_app/movie/presentation/screens/movies_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../core/error/internetCheck.dart';
 import '../../../core/services/service_locator.dart';
 import '../../../core/utilies/colors.dart';
 import '../../../core/utilies/enum.dart';
@@ -302,7 +303,7 @@ class MovieDetailContent extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: AppSize.s15),
+                      const SizedBox(height: AppSize.s20),
                       if(state.movieDetails!.company.isNotEmpty)
                       Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -322,22 +323,21 @@ class MovieDetailContent extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: AppSize.s100,
-                              child: ListView.separated(
-                                    separatorBuilder: (context,index)=>const SizedBox(height: AppSize.s3,),
-                                    padding: EdgeInsets.zero,
-                                itemBuilder: (context, index) => Text(
-                                  state.movieDetails!.company[index].name,
-                                  style: const TextStyle(
-                                    fontSize: AppSize.s16,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: AppSize.s1_2,
-                                  ),
+                            padding: const EdgeInsets.all(AppSize.s8),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  separatorBuilder: (context,index)=>const SizedBox(height: AppSize.s3,),
+                                  padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) => Text(
+                                state.movieDetails!.company[index].name,
+                                style: const TextStyle(
+                                  fontSize: AppSize.s16,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: AppSize.s1_2,
                                 ),
-                                itemCount: state.movieDetails!.company.length,
                               ),
+                              itemCount: state.movieDetails!.company.length,
                             ),
                           ),
                         ],
@@ -422,4 +422,6 @@ class MovieDetailContent extends StatelessWidget {
   }
 
 
+
 }
+
