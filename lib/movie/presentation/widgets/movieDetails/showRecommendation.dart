@@ -32,7 +32,6 @@ class ShowRecommendation extends StatelessWidget {
                             builder: (context) => MovieDetailScreen(
                               id: recommendation.id,
                             )));
-                    print(recommendation.id);
                   },
                   child: ClipRRect(
                     borderRadius:

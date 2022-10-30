@@ -34,7 +34,6 @@ class UpComingWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(right: AppSize.s8),
                     child: GestureDetector(
                       onTap: () {
-                        print(movie.id);
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetailScreen(id: movie.id,)));
                       },
                       child: ClipRRect(

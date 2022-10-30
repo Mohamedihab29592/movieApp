@@ -33,7 +33,7 @@ class NowPlayingWidget extends StatelessWidget {
                   child: CarouselSlider(
                     options: CarouselOptions(
                       height: MediaQuery.of(context).size.height,
-                      autoPlay: false,
+                      autoPlay: true,
                       viewportFraction: 1,
 
                     ),
@@ -41,7 +41,6 @@ class NowPlayingWidget extends StatelessWidget {
                           (item) {
                         return GestureDetector(
                           onTap: () {
-                            print(item.id);
 
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetailScreen(id: item.id,)));
                           },

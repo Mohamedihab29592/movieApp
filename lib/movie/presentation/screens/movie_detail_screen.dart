@@ -9,7 +9,6 @@ import 'package:movie_app/movie/presentation/controllers/cast/cast_bloc.dart';
 import 'package:movie_app/movie/presentation/screens/movies_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../core/error/internetCheck.dart';
 import '../../../core/services/service_locator.dart';
 import '../../../core/utilies/colors.dart';
 import '../../../core/utilies/enum.dart';
