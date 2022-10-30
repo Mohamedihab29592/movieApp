@@ -6,7 +6,6 @@ import 'package:movie_app/core/utilies/enum.dart';
 import 'package:movie_app/movie/domain/useCase/getPopularPlaying_useCase.dart';
 import 'package:movie_app/movie/domain/useCase/getTopRated_useCase.dart';
 import 'package:movie_app/movie/domain/useCase/nowPlaying_useCase.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../domain/useCase/upComingUseCase.dart';
 import 'blocEvents.dart';
@@ -20,7 +19,7 @@ class MovieBloc extends Bloc<MovieEvents, MovieState> {
 
   MovieBloc(this.getNowPlayingUseCase, this.getPopularUseCase,
       this.getTopRatedUseCase, this.getUpComingUseCase)
-      : super(const MovieState()) {
+      : super( const MovieState()) {
     on<GetNowPlayingMoviesEvent>(_getNowPlayingMovies);
     on<GetPopularMoviesEvent>(_getPopularMovies);
     on<GetTopRatedMoviesEvent>(_getTopRatedMovies);
@@ -28,8 +27,6 @@ class MovieBloc extends Bloc<MovieEvents, MovieState> {
   }
 
   FutureOr<void> _getNowPlayingMovies(GetNowPlayingMoviesEvent event, Emitter<MovieState> emit) async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-
     final result = await getNowPlayingUseCase(const NoParameters());
     result.fold(
         (l) => emit(state.copyWith(

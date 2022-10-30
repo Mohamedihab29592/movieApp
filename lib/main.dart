@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:movie_app/core/services/service_locator.dart';
 import 'package:movie_app/movie/presentation/screens/movies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/error/internetCheck.dart';
+import 'core/local/cache_helper.dart';
 import 'core/utilies/appStrings.dart';
 import 'core/utilies/themes.dart';
-import 'core/utilies/toast.dart';
 import 'movie/presentation/controllers/mainScreen/bloc.dart';
 import 'movie/presentation/controllers/mainScreen/blocEvents.dart';
 import 'movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
@@ -17,12 +16,13 @@ import 'movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await InternetCheck().checkInternet();
-  final sharedPreferences = await SharedPreferences.getInstance();
-  bool? isDarkMode = sharedPreferences.getBool("isDarkMode") ?? false;
-  SystemChrome.setSystemUIOverlayStyle(
+ await NetworkInfoImpl().checkInternet();
+ SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   ServiceLocator().init();
+  await CacheHelper.init();
+  final sharedPreferences = await SharedPreferences.getInstance();
+  bool? isDarkMode = sharedPreferences.getBool("isDarkMode") ?? false;
   runApp(MyApp(isDarkMode: isDarkMode,));
 }
 

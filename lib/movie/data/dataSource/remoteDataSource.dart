@@ -1,5 +1,7 @@
+
 import 'package:dio/dio.dart';
 import 'package:movie_app/core/error/exceptions.dart';
+import 'package:movie_app/core/local/cache_helper.dart';
 import 'package:movie_app/core/network/errorMessageModel.dart';
 import 'package:movie_app/core/utilies/constants.dart';
 import 'package:movie_app/movie/data/models/movieDetailsModel.dart';
@@ -27,9 +29,9 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource {
   @override
   Future<List<MovieModel>> getNowPlayingMovies() async {
 final response = await Dio().get(AppConstants.nowPlayingPath);
-
 if(response.statusCode== 200){
-  return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
+ CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+ return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
 }
 else
   {
@@ -43,7 +45,9 @@ else
     final response = await Dio().get(AppConstants.popularPlayingPath);
 
     if(response.statusCode== 200){
-    return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
+      CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+
+      return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
     }
     else
     {
@@ -53,9 +57,12 @@ else
 
   @override
   Future<List<MovieModel>> getTopRatedMovie()async {
+
     final response = await Dio().get(AppConstants.getTopRatedMoviePath);
 
     if(response.statusCode== 200){
+      CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+
       return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
     }
     else
@@ -69,6 +76,8 @@ else
     final response = await Dio().get(AppConstants.getUpComingMoviePath);
 
     if(response.statusCode== 200){
+      CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+
 
       return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
     }

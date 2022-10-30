@@ -26,5 +26,20 @@ class MovieModel extends Movie {
       voteAverage: json["vote_average"].toDouble(),
       releaseDate: json["release_date"]
   );
+Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "title": title,
+      "vote_count": voteCount,
+      "original_language": originalLanguage,
+      "poster_path": posterPath,
+      "backdrop_path": backdropPath,
+      "genre_ids": genreIds,
+      "overview": overview,
+      "vote_average": voteAverage,
+      "release_date": releaseDate,
+    };
+  }
 
 }
+
