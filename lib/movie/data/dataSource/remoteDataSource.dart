@@ -30,7 +30,7 @@ class MovieRemoteDataSource extends BaseMovieRemoteDataSource {
   Future<List<MovieModel>> getNowPlayingMovies() async {
 final response = await Dio().get(AppConstants.nowPlayingPath);
 if(response.statusCode== 200){
- CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+ CacheHelper.saveData(key: "cachedNowPlayingLocalData", value: response.data.toString());
  return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
 }
 else
@@ -45,7 +45,7 @@ else
     final response = await Dio().get(AppConstants.popularPlayingPath);
 
     if(response.statusCode== 200){
-      CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+      CacheHelper.saveData(key: "cachedPopularLocalData", value: response.data.toString());
 
       return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
     }
@@ -61,7 +61,7 @@ else
     final response = await Dio().get(AppConstants.getTopRatedMoviePath);
 
     if(response.statusCode== 200){
-      CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+      CacheHelper.saveData(key: "cachedTopRatedLocalData", value: response.data.toString());
 
       return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
     }
@@ -76,7 +76,7 @@ else
     final response = await Dio().get(AppConstants.getUpComingMoviePath);
 
     if(response.statusCode== 200){
-      CacheHelper.saveData(key: "cachedHomeData", value: response.data.toString());
+      CacheHelper.saveData(key: "cachedUpComingLocalData", value: response.data.toString());
 
 
       return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
