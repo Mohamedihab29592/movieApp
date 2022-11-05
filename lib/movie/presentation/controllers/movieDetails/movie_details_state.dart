@@ -1,6 +1,7 @@
 
  import 'package:equatable/equatable.dart';
 
+import '../../../../core/utilies/appStrings.dart';
 import '../../../../core/utilies/enum.dart';
 import '../../../domain/entities/movies_detail.dart';
 import '../../../domain/entities/recommendation.dart';
@@ -18,11 +19,11 @@ class MovieDetailsState extends Equatable {
  const MovieDetailsState({
    this.movieDetails,
      this.movieDetailsState = RequestState.loading,
-     this.movieDetailsMessage="",
+     this.movieDetailsMessage=AppStrings.noData,
 
    this.movieRecommendation= const[],
    this.movieRecommendationState = RequestState.loading,
-   this.movieRecommendationMessage="",
+   this.movieRecommendationMessage=AppStrings.noData,
 
  });
 

@@ -7,6 +7,7 @@ import 'package:movie_app/movie/domain/useCase/movieDetails_useCase.dart';
 import '../../../core/error/faliure.dart';
 import '../entities/cast.dart';
 import '../entities/movie.dart';
+import '../useCase/getSearchUseCase.dart';
 import '../useCase/movieRecommendation_useCase.dart';
 
 abstract class BaseMovieRepository{
@@ -15,6 +16,7 @@ abstract class BaseMovieRepository{
   Future<Either<Failure,List<Movie>>> getPopularPlaying();
   Future<Either<Failure,List<Movie>>> getTopRatedMovie();
   Future<Either<Failure,List<Movie>>> getUpComingMovie();
+  Future<Either<Failure,List<Movie>>> getSearchMovie(MovieSearchParameter parameter);
   Future<Either<Failure,MovieDetails>> getMovieDetails(MovieDetailsParameter parameter);
   Future<Either<Failure,List<Cast>>> getMovieCast(MovieCastParameter parameter);
   Future<Either<Failure,List<Recommendation>>> getMovieRecommendation(MovieRecoParameter parameter);

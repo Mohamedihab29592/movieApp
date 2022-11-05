@@ -8,6 +8,7 @@ import 'package:movie_app/movie/data/models/movieDetailsModel.dart';
 import 'package:movie_app/movie/data/models/movieModel.dart';
 import 'package:movie_app/movie/data/models/recommendationModel.dart';
 import 'package:movie_app/movie/domain/useCase/getCastUseCase.dart';
+import 'package:movie_app/movie/domain/useCase/getSearchUseCase.dart';
 import 'package:movie_app/movie/domain/useCase/movieDetails_useCase.dart';
 import 'package:movie_app/movie/domain/useCase/movieRecommendation_useCase.dart';
 
@@ -18,6 +19,7 @@ abstract class BaseMovieRemoteDataSource{
   Future<List<MovieModel>> getPopularPlaying();
   Future<List<MovieModel>> getTopRatedMovie();
   Future<List<MovieModel>> getUpComingMovie();
+  Future<List<MovieModel>> getSearchMovie(MovieSearchParameter parameter);
   Future<MovieDetailsModel> getMovieDetails(MovieDetailsParameter parameter);
   Future<List<MovieCastModel>> getMovieCast(MovieCastParameter parameter);
   Future<List<RecommendationsModel>> getMovieRecommendation(MovieRecoParameter parameter);
@@ -89,6 +91,20 @@ else
   }
 
   @override
+  Future<List<MovieModel>> getSearchMovie(MovieSearchParameter parameter) async{
+    final response = await Dio().get(AppConstants.getSearchPath(parameter.text));
+
+    if(response.statusCode== 200){
+      return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
+    }
+    else
+    {
+
+      throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(response.data),);
+    }
+  }
+
+  @override
   Future<MovieDetailsModel> getMovieDetails(MovieDetailsParameter parameter) async{
     final response = await Dio().get(AppConstants.getMovieDetailsPath(parameter.id));
 
@@ -127,6 +143,8 @@ else
       throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(response.data),);
     }
   }
+
+
 
 
 

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:movie_app/core/utilies/enum.dart';
 
+import '../../../../core/utilies/appStrings.dart';
 import '../../../domain/entities/movie.dart';
 
 class MovieState extends Equatable{
@@ -26,7 +27,7 @@ class MovieState extends Equatable{
   const MovieState({
     this.nowPlayingMovies = const [],
     this.nowPlayingState= RequestState.loading,
-    this.nowPlayingMessage='',
+    this.nowPlayingMessage=AppStrings.noData,
 
     this.popularMovies = const [],
     this.popularState= RequestState.loading,

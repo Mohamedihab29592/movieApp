@@ -12,6 +12,7 @@ import 'package:movie_app/movie/domain/useCase/movieRecommendation_useCase.dart'
 
 import '../../../core/error/exceptions.dart';
 import '../../../core/error/internetCheck.dart';
+import '../../domain/useCase/getSearchUseCase.dart';
 import '../dataSource/home_local_data_source.dart';
 import '../dataSource/remoteDataSource.dart';
 
@@ -121,6 +122,16 @@ class MovieRepository extends BaseMovieRepository{
 
    }
   }
+  @override
+  Future<Either<Failure, List<Movie>>> getSearchMovie(MovieSearchParameter parameter)async {
+    final result = await baseMovieRemoteDataSource.getSearchMovie(parameter);
+
+    try {
+      return Right(result);
+    } on ServerExceptions catch (failure) {
+      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    }
+  }
 
   @override
   Future<Either<Failure, MovieDetails>> getMovieDetails(MovieDetailsParameter parameter) async{
@@ -152,6 +163,8 @@ class MovieRepository extends BaseMovieRepository{
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+
+
 
 
 

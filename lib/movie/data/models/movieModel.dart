@@ -19,12 +19,12 @@ class MovieModel extends Movie {
       title: json["title"],
       voteCount: json["vote_count"],
       originalLanguage: json["original_language"],
-      posterPath: json["poster_path"]??json["backdrop_path"],
-      backdropPath: json["backdrop_path"]??json["poster_path"],
+      posterPath: json["poster_path"]??json["backdrop_path"]??"",
+      backdropPath: json["backdrop_path"]??json["poster_path"]??"",
       genreIds: List<int>.from(json["genre_ids"].map((e)=>e)),
       overview: json["overview"],
       voteAverage: json["vote_average"].toDouble(),
-      releaseDate: json["release_date"]
+      releaseDate: json["release_date"],
   );
 Map<String, dynamic> toJson() {
     return {

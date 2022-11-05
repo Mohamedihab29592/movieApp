@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
             ..add(GetTopRatedMoviesEvent())
             ..add(GetUpComingMoviesEvent()),
         ),
+
       ],
       child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
         builder: (context, state) =>

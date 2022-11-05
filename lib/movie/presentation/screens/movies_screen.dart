@@ -13,10 +13,10 @@ import '../widgets/movieScreen/seeMoreWidget.dart';
 import '../widgets/movieScreen/popularWidget.dart';
 import '../widgets/movieScreen/topRelatedWidget.dart';
 import '../widgets/movieScreen/upcomingWidgets.dart';
+import 'movieSearch.dart';
 
 class MoviesScreen extends StatelessWidget {
   const MoviesScreen({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,13 @@ class MoviesScreen extends StatelessWidget {
                 onPressed: () {
                   ThemeModeCubit.get(context).changeAppMode();
                 },
-                icon: const Icon(Icons.dark_mode))
+                icon: const Icon(Icons.brightness_4) ,
+            ),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const MovieSearch()));
+                },
+                icon:  const Icon(Icons.search))
           ],
           pinned: true,
           expandedHeight: 575,

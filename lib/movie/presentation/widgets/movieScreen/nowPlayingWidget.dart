@@ -26,7 +26,6 @@ class NowPlayingWidget extends StatelessWidget {
         builder: (context, state) {
           return  FadeIn(
             duration: const Duration(milliseconds: 500),
-
             child: Column(
               children: [
                 Expanded(

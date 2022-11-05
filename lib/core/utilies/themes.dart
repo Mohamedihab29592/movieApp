@@ -27,17 +27,17 @@ elevatedButtonTheme: ElevatedButtonThemeData(style:ButtonStyle(backgroundColor:M
         statusBarIconBrightness: Brightness.light,
       ),
     ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
+    textTheme:  const TextTheme(
+      bodyLarge: TextStyle(
         fontSize: AppSize.s22,
         fontWeight: FontWeight.w600,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         fontSize: AppSize.s14,
         fontWeight: FontWeight.w400,
         color: AppColors.white,
       ),
-      subtitle2: TextStyle(
+      titleSmall: TextStyle(
         fontSize: AppSize.s14,
         fontWeight: FontWeight.w600,
         color: AppColors.grey,
@@ -70,18 +70,18 @@ elevatedButtonTheme: ElevatedButtonThemeData(style:ButtonStyle(backgroundColor:M
         statusBarIconBrightness: Brightness.dark,
       ),
     ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
+    textTheme:  const TextTheme(
+      bodyLarge: TextStyle(
         fontSize: AppSize.s22,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         fontSize: AppSize.s14,
         fontWeight: FontWeight.w400,
         color: AppColors.black,
       ),
-      subtitle2: TextStyle(
+      titleSmall: TextStyle(
         fontSize: AppSize.s14,
         fontWeight: FontWeight.w600,
         color: AppColors.grey,
