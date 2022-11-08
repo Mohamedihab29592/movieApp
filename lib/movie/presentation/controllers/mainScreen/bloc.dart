@@ -12,6 +12,7 @@ import 'blocEvents.dart';
 import 'blocStates.dart';
 
 class MovieBloc extends Bloc<MovieEvents, MovieState> {
+
   final GetNowPlayingUseCase getNowPlayingUseCase;
   final GetPopularPlayingUseCase getPopularUseCase;
   final GetTopRatedUseCase getTopRatedUseCase;

@@ -21,8 +21,8 @@ class CastBloc extends Bloc<CastEvent, CastState> {
   FutureOr<void> _getCast(GetCastEvent event, Emitter<CastState> emit) async {
     final result = await movieCastUseCase(MovieCastParameter(id: event.id));
     result.fold(
-        (l) => emit(CastState(
-            castState: RequestState.error, castMessage: l.message)),
-        (r) =>emit( CastState(castState: RequestState.loaded, cast: r)));
+        (l) => emit(
+            CastState(castState: RequestState.error, castMessage: l.message)),
+        (r) => emit(CastState(castState: RequestState.loaded, cast: r)));
   }
 }

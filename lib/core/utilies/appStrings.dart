@@ -1,7 +1,6 @@
 class AppStrings{
   ///Movie Module
   static const String appName = "Movie App";
-  static const String noRouteFound = "No Data Found !!!";
   static const String nowPlaying = "NOW PLAYING MOVIES";
   static const String popular = "Popular";
   static const String popularMovies = "Popular Movies";
@@ -23,8 +22,9 @@ class AppStrings{
   static const String eighteen = '18+ ';
   static const String twelve = '12+ ';
   static const String search = 'Search';
-  static const String noSearch = '$noData to $search';
   static const String noData = 'No Data';
+  static const String noSearch = '$noData to $search';
+
 }
 
 ///Tv Module
