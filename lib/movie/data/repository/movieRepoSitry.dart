@@ -12,6 +12,7 @@ import 'package:movie_app/movie/domain/useCase/movieRecommendation_useCase.dart'
 
 import '../../../core/error/exceptions.dart';
 import '../../../core/error/internetCheck.dart';
+import '../../../core/utilies/appStrings.dart';
 import '../../domain/useCase/getSearchUseCase.dart';
 import '../dataSource/home_local_data_source.dart';
 import '../dataSource/remoteDataSource.dart';
@@ -40,7 +41,7 @@ class MovieRepository extends BaseMovieRepository{
         return Right(localHome);
       }
       on LocalExceptions {
-        return const Left(DataBaseFailure("No Data"));
+        return const Left(DataBaseFailure(AppStrings.noData));
       }
 
 
@@ -67,7 +68,7 @@ class MovieRepository extends BaseMovieRepository{
        return Right(localHome);
      }
      on LocalExceptions {
-       return const Left(DataBaseFailure("No Data"));
+       return const Left(DataBaseFailure(AppStrings.noData));
      }
 
 
@@ -92,7 +93,7 @@ class MovieRepository extends BaseMovieRepository{
       return Right(localHome);
     }
     on LocalExceptions {
-      return const Left(DataBaseFailure("No Data"));
+      return const Left(DataBaseFailure(AppStrings.noData));
     }
 
 
@@ -116,7 +117,7 @@ class MovieRepository extends BaseMovieRepository{
        return Right(localHome);
      }
      on LocalExceptions {
-       return const Left(DataBaseFailure("No Data"));
+       return const Left(DataBaseFailure(AppStrings.noData));
      }
 
 

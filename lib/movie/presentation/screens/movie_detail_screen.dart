@@ -338,16 +338,7 @@ class MovieDetailContent extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: AppSize.s8),
-                      const Text(
-                        AppStrings.cast,
-                        style: TextStyle(
-                          fontSize: AppSize.s20,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: AppSize.s1_2,
-                        ),
-                      ),
-                      const SizedBox(height: AppSize.s8),
-                       ShowCast(id:id),
+                      ShowCast(id:id),
                     ],
                   ),
                 ),

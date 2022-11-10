@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/services/service_locator.dart';
-import 'package:movie_app/movie/presentation/screens/movies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/error/internetCheck.dart';
@@ -12,6 +11,7 @@ import 'core/utilies/themes.dart';
 import 'movie/presentation/controllers/mainScreen/bloc.dart';
 import 'movie/presentation/controllers/mainScreen/blocEvents.dart';
 import 'movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
+import 'movie/presentation/screens/splash_screen/splash_screen.dart';
 
 
 void main() async {
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
               theme: AppThemes.lightMode,
               debugShowCheckedModeBanner: false,
               title: AppStrings.appName,
-              home: const MoviesScreen(),
+              home: const SplashScreen(),
             ),
       ),
     );

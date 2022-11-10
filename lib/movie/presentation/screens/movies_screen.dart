@@ -7,6 +7,7 @@ import 'package:movie_app/movie/presentation/controllers/mainScreen/bloc.dart';
 import 'package:movie_app/movie/presentation/controllers/mainScreen/blocStates.dart';
 import 'package:movie_app/movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
 
+import '../../../core/services/service_locator.dart';
 import '../../../core/utilies/values_manger.dart';
 import '../controllers/mainScreen/blocEvents.dart';
 import '../widgets/movieScreen/nowPlayingWidget.dart';
@@ -19,6 +20,9 @@ import 'movieSearch.dart';
 class MoviesScreen extends StatefulWidget {
   const MoviesScreen({Key? key}) : super(key: key);
 
+
+
+
   @override
   State<MoviesScreen> createState() => _MoviesScreenState();
 }
@@ -27,10 +31,9 @@ class _MoviesScreenState extends State<MoviesScreen> {
 
 
   Future _refresh() async {
-  final itemBloc=   BlocProvider.of<MovieBloc>(context)
-      ..add(GetNowPlayingMoviesEvent())..add(GetPopularMoviesEvent())..add(GetUpComingMoviesEvent());
-   return Future.delayed(const Duration(seconds: 5), () {
-     itemBloc;
+  sl<MovieBloc>()..add(GetNowPlayingMoviesEvent())..add(GetPopularMoviesEvent())..add(GetUpComingMoviesEvent());
+   return Future.delayed(const Duration(seconds: 3), () {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MoviesScreen()));
     });
   }
   @override

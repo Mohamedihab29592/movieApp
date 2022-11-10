@@ -67,7 +67,7 @@ class MovieSearchWidget extends StatelessWidget {
             CrossAxisAlignment.start,
             children: [
               SizedBox(
-                  width: size.width * 0.60,
+                  width: size.width /2,
                   child: Text(
                     movieSearch.title,
                     style: const TextStyle(
