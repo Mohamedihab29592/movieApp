@@ -26,7 +26,7 @@ class ShowRecommendation extends StatelessWidget {
                 duration: Duration(milliseconds: AppSize.s500.toInt()),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => MovieDetailScreen(

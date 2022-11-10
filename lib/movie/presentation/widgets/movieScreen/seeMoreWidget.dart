@@ -41,7 +41,7 @@ class SeeMoreWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: AppSize.s8),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetailScreen(id: movie.id,)));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MovieDetailScreen(id: movie.id,)));
                         },
                         child: ClipRRect(
                           borderRadius:
@@ -70,10 +70,9 @@ class SeeMoreWidget extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(width: size.width * 0.63,
-
+                        SizedBox(
+                            width: size.width /2,
                             child: Text(movie.title,style: const TextStyle(
-                              color: AppColors.white,
                               fontSize: AppSize.s20,
                               fontWeight: FontWeight.bold,
                             ),)),
