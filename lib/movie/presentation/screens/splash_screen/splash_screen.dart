@@ -33,6 +33,7 @@ Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const M
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

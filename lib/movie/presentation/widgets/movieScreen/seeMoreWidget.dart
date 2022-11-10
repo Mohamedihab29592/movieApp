@@ -140,7 +140,6 @@ class SeeMoreWidget extends StatelessWidget {
                           "LANG:${movie.originalLanguage.toUpperCase()} ",
                           style: const TextStyle(
                             fontSize: AppSize.s16,
-                            color: AppColors.white,
                             fontWeight: FontWeight.w400,
                             letterSpacing: AppSize.s1_2,
                           ),

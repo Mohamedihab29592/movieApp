@@ -71,7 +71,7 @@ class MovieSearchWidget extends StatelessWidget {
                   child: Text(
                     movieSearch.title,
                     style: const TextStyle(
-                      color: AppColors.white,
+
                       fontSize: AppSize.s20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -148,7 +148,6 @@ class MovieSearchWidget extends StatelessWidget {
                 "LANG:${movieSearch.originalLanguage.toUpperCase()} ",
                 style: const TextStyle(
                   fontSize: AppSize.s16,
-                  color: AppColors.white,
                   fontWeight: FontWeight.w400,
                   letterSpacing: AppSize.s1_2,
                 ),
