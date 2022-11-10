@@ -89,7 +89,7 @@ class ShowCast extends StatelessWidget {
                                 maxWidth: 80,
                               ),
                               child: Text(state.cast![index].name, style: const TextStyle(
-                                  color: Colors.white70,
+
                                   overflow: TextOverflow.ellipsis
                               ), maxLines: 2,)),
 
