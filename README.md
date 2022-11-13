@@ -1,17 +1,33 @@
-# movie_app
+# Movie_News
+A mobile application developed using Flutter. It supports both Android and IOS.
+ It allows the user to find New Movies With Open API (https://www.themoviedb.org/) 
+ Features => Dark&light Theme - Movie Search - Movie Details .
 
-A new Flutter project.
 
-## Getting Started
+## Table of contents
+- ### [main packages used =>](#main-packages-used)
+- ### [Folder structure =>](#folder-structure)
+- ### [Screenshots =>](#screenshots)
+- ### [Demo video =>](#demo-video)
 
-This project is a starting point for a Flutter application.
+## Main packages used
 
-A few resources to get you started if this is your first Flutter project:
+- [dio](https://pub.dev/packages/dio) to make integration with API
+- [flutter_bloc](https://pub.dev/packages/flutter_bloc) as state management
+- [shared_preferences](https://pub.dev/packages/shared_preferences) to handle caching data
+- [internet_connection_checker](https://pub.dev/packages/internet_connection_checker) to handle internet connection 
+- [get_it](https://pub.dev/packages/get_it) to make dependency injection
+- [dartz](https://pub.dev/packages/dartz) to Functional programming in Dart
+- [equatable](https://pub.dev/packages/equatable) to Simplify Equality Comparisons
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Folder structure
+I Have applied clean archeticture concept With MVVM archeticture
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-"# movieApp" 
+
+## Screenshots
+
+Here are some screeshots for the application:
+
+|<img src="(https://user-images.githubusercontent.com/64233832/201532658-87e54d8c-c8fa-41ec-9d21-0f3740073bf6.jpeg" width="300"> | <img src="https://user-images.githubusercontent.com/64233832/201532663-ded74365-de36-47a5-ba09-7eef5d4603f3.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532666-52d388ae-0ae7-4914-bad7-37b98dfb6dd2.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532667-23c48397-c2ce-433d-ab87-b06d1d1bb798.jpeg" width="300">
+--- |---|---
+
