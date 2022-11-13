@@ -28,6 +28,6 @@ I Have applied clean archeticture concept With MVVM archeticture
 
 Here are some screeshots for the application:
 
-|<img src="(https://user-images.githubusercontent.com/64233832/201532658-87e54d8c-c8fa-41ec-9d21-0f3740073bf6.jpeg" width="300"> | <img src="https://user-images.githubusercontent.com/64233832/201532663-ded74365-de36-47a5-ba09-7eef5d4603f3.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532666-52d388ae-0ae7-4914-bad7-37b98dfb6dd2.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532667-23c48397-c2ce-433d-ab87-b06d1d1bb798.jpeg" width="300">
+|<img src="(https://user-images.githubusercontent.com/64233832/201532658-87e54d8c-c8fa-41ec-9d21-0f3740073bf6.jpeg" width="300"> | <img src="https://user-images.githubusercontent.com/64233832/201532663-ded74365-de36-47a5-ba09-7eef5d4603f3.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532666-52d388ae-0ae7-4914-bad7-37b98dfb6dd2.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532667-23c48397-c2ce-433d-ab87-b06d1d1bb798.jpeg" width="300">|
 --- |---|---
 
