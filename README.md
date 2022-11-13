@@ -8,7 +8,7 @@ A mobile application developed using Flutter. It supports both Android and IOS.
 - ### [main packages used =>](#main-packages-used)
 - ### [Folder structure =>](#folder-structure)
 - ### [Screenshots =>](#screenshots)
-- ### [Demo video =>](#demo-video)
+- ### [APK File =>](#APK-File)
 
 ## Main packages used
 
@@ -41,4 +41,4 @@ Here are some screeshots for the application:
 <img src="https://user-images.githubusercontent.com/64233832/201533430-89afafad-1e25-46ee-bdc7-a282f909fc4d.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533438-78a03013-9ed6-4b83-b263-f64361e02866.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533447-87cc678b-84ab-4ddd-9aed-7d5eaf275a22.jpeg" width="300">|
 --- |---|---
 
-## Demo Video
+## APK File
