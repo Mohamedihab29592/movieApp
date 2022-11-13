@@ -8,6 +8,7 @@ import 'package:movie_app/movie/presentation/controllers/mainScreen/blocStates.d
 import 'package:movie_app/movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
 
 import '../../../core/services/service_locator.dart';
+import '../../../core/utilies/colors.dart';
 import '../../../core/utilies/values_manger.dart';
 import '../controllers/mainScreen/blocEvents.dart';
 import '../widgets/movieScreen/nowPlayingWidget.dart';
@@ -30,9 +31,11 @@ class MoviesScreen extends StatefulWidget {
 class _MoviesScreenState extends State<MoviesScreen> {
 
 
+
+
   Future _refresh() async {
   sl<MovieBloc>()..add(GetNowPlayingMoviesEvent())..add(GetPopularMoviesEvent())..add(GetUpComingMoviesEvent());
-   return Future.delayed(const Duration(seconds: 3), () {
+   return Future.delayed(const Duration(seconds: 2), () {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MoviesScreen()));
     });
   }
@@ -96,10 +99,11 @@ class _MoviesScreenState extends State<MoviesScreen> {
                         },
                         child: Row(
                           children: const [
-                            Text(AppStrings.seeMore),
+                            Text(AppStrings.seeMore,style: TextStyle(color: AppColors.teal),),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: AppSize.s16,
+                                color: AppColors.teal
                             )
                           ],
                         ),
@@ -133,11 +137,12 @@ class _MoviesScreenState extends State<MoviesScreen> {
                         child: Row(
                           children: const [
                             Text(
-                              AppStrings.seeMore,
+                              AppStrings.seeMore,style: TextStyle(color: AppColors.teal),
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
                               size: AppSize.s16,
+                                color: AppColors.teal
                             )
                           ],
                         ),
@@ -172,11 +177,13 @@ class _MoviesScreenState extends State<MoviesScreen> {
                           child: Row(
                             children: const [
                               Text(
-                                AppStrings.seeMore,
+                                AppStrings.seeMore,style: TextStyle(color: AppColors.teal),
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: AppSize.s16,
+                                  color: AppColors.teal
+
                               )
                             ],
                           ),

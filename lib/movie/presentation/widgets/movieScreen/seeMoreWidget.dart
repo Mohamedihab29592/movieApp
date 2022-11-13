@@ -41,7 +41,7 @@ class SeeMoreWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: AppSize.s8),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MovieDetailScreen(id: movie.id,)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetailScreen(id: movie.id,)));
                         },
                         child: ClipRRect(
                           borderRadius:
