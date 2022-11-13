@@ -9,6 +9,7 @@ A mobile application developed using Flutter. It supports both Android and IOS.
 - ### [Folder structure =>](#folder-structure)
 - ### [Screenshots =>](#screenshots)
 - ### [APK File =>](#APK-File)
+- ### [Demo Video =>](#Demo-Video)
 
 ## Main packages used
 
@@ -42,3 +43,6 @@ Here are some screeshots for the application:
 --- |---|---
 
 ## APK File
+https://drive.google.com/file/d/1aCiHZnVSwVRyXM43zWMabxVNUM6LWU2n/view?usp=sharing
+
+## Demo Video
