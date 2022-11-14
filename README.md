@@ -43,6 +43,9 @@ Here are some screeshots for the application:
 --- |---|---
 
 ## APK File
-https://drive.google.com/file/d/1aCiHZnVSwVRyXM43zWMabxVNUM6LWU2n/view?usp=sharing
+https://drive.google.com/file/d/18_b-alWoIrDYz3kcz-L1hYeIMKj5lyZT/view?usp=sharing
 
 ## Demo Video
+
+https://user-images.githubusercontent.com/64233832/201553598-479a3eae-97b8-4c35-8b5e-a299bb9f5c91.mp4
+
