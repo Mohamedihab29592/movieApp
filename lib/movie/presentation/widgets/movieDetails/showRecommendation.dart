@@ -24,38 +24,28 @@ class ShowRecommendation extends StatelessWidget {
               return FadeInUp(
                 from: 20,
                 duration: Duration(milliseconds: AppSize.s500.toInt()),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MovieDetailScreen(
-                              id: recommendation.id,
-                            )));
-                  },
-                  child: ClipRRect(
-                    borderRadius:
-                    const BorderRadius.all(Radius.circular(AppSize.s4)),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                      AppConstants.imageUrl(recommendation.posterPath!),
-                      placeholder: (context, url) => Shimmer.fromColors(
-                        baseColor: Colors.grey[850]!,
-                        highlightColor: Colors.grey[800]!,
-                        child: Container(
-                          height: AppSize.s170,
-                          width: AppSize.s120,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(AppSize.s8),
-                          ),
+                child: ClipRRect(
+                  borderRadius:
+                  const BorderRadius.all(Radius.circular(AppSize.s4)),
+                  child: CachedNetworkImage(
+                    imageUrl:
+                    AppConstants.imageUrl(recommendation.posterPath!),
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[850]!,
+                      highlightColor: Colors.grey[800]!,
+                      child: Container(
+                        height: AppSize.s170,
+                        width: AppSize.s120,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(AppSize.s8),
                         ),
                       ),
-                      errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
-                      height: 180.0,
-                      fit: BoxFit.cover,
                     ),
+                    errorWidget: (context, url, error) =>
+                    const Icon(Icons.error),
+                    height: 180.0,
+                    fit: BoxFit.cover,
                   ),
                 ),
               );

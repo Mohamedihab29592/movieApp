@@ -74,13 +74,7 @@ class MovieDetailContent extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.arrow_back_ios)),
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MoviesScreen()));
-                      },
-                      icon: const Icon(Icons.menu)),
-                ],
+
                 pinned: true,
                 expandedHeight: AppSize.s250,
                 flexibleSpace: FlexibleSpaceBar(

@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _goNext() {
-Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MoviesScreen()));  }
+Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MoviesScreen(context: context,)));  }
 
   @override
   void initState() {

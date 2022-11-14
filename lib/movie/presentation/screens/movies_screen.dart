@@ -18,33 +18,27 @@ import '../widgets/movieScreen/topRelatedWidget.dart';
 import '../widgets/movieScreen/upcomingWidgets.dart';
 import 'movieSearch.dart';
 
-class MoviesScreen extends StatefulWidget {
-  const MoviesScreen({Key? key}) : super(key: key);
-
-
-
-
-  @override
-  State<MoviesScreen> createState() => _MoviesScreenState();
-}
-
-class _MoviesScreenState extends State<MoviesScreen> {
-
+class MoviesScreen extends StatelessWidget {
+ final  BuildContext context;
+  const MoviesScreen({Key? key, required this.context}) : super(key: key);
 
 
 
   Future _refresh() async {
   sl<MovieBloc>()..add(GetNowPlayingMoviesEvent())..add(GetPopularMoviesEvent())..add(GetUpComingMoviesEvent());
    return Future.delayed(const Duration(seconds: 2), () {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const MoviesScreen()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MoviesScreen(context: context,)));
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh:_refresh,
       child: Scaffold(
-        body: CustomScrollView(slivers: [
+        body: CustomScrollView(
+
+            slivers: [
           SliverAppBar(
 
 
@@ -202,5 +196,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
     );
   }
 }
+
+
 
 
