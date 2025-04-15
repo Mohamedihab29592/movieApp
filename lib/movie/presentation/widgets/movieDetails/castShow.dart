@@ -31,7 +31,7 @@ class ShowCast extends StatelessWidget {
               ),
               const SizedBox(height: AppSize.s8),
               SizedBox(
-                height: AppSize.s120,
+                height: AppSize.s150,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   separatorBuilder: (context, index) => const SizedBox(width: 10,),

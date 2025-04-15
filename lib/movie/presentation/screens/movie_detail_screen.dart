@@ -6,9 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_app/core/utilies/appStrings.dart';
 import 'package:movie_app/core/utilies/constants.dart';
 import 'package:movie_app/movie/presentation/controllers/cast/cast_bloc.dart';
-import 'package:movie_app/movie/presentation/screens/movies_screen.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../core/services/service_locator.dart';
 import '../../../core/utilies/colors.dart';
 import '../../../core/utilies/enum.dart';

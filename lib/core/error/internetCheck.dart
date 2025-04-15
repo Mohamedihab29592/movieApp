@@ -18,7 +18,7 @@ class NetworkInfoImpl implements NetworkInfo {
 
   @override
   Future<void> checkInternet() async {
-    bool result = await InternetConnectionChecker().hasConnection;
+    bool result = await InternetConnectionChecker.instance.hasConnection;
     if (result == false) {
       showToast(text: AppStrings.noInternet, state: ToastStates.error);
     }

@@ -50,7 +50,7 @@ class ServiceLocator{
 
     ///core
      sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(connectionChecker: sl()));
-     sl.registerLazySingleton(() => InternetConnectionChecker());
+    sl.registerLazySingleton(() => InternetConnectionChecker.createInstance());
   }
 
 }

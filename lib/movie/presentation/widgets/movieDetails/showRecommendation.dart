@@ -8,7 +8,6 @@ import '../../../../core/utilies/constants.dart';
 import '../../../../core/utilies/values_manger.dart';
 import '../../controllers/movieDetails/movie_details_bloc.dart';
 import '../../controllers/movieDetails/movie_details_state.dart';
-import '../../screens/movie_detail_screen.dart';
 
 class ShowRecommendation extends StatelessWidget {
   const ShowRecommendation({Key? key}) : super(key: key);
