@@ -4,7 +4,6 @@ class AppStrings{
   static const String nowPlaying = "Now playing";
   static const String popular = "Popular";
   static const String topRated = "Top Rated";
-  static const String trend = "Trend";
   static const String upComing = "UpComing";
   static const String genres = "Genres";
   static const String moreLikeThis = 'More like this';
@@ -19,6 +18,8 @@ class AppStrings{
   static const String eighteen = '18+ ';
   static const String twelve = '12+ ';
   static const String search = 'Search';
+  static const String searchResult = 'Search result';
+  static const String errorSearch = 'Type text to search';
   static const String noData = 'No Data';
   static const String noSearch = '$noData to $search';
 

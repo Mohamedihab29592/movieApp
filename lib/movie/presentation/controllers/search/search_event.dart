@@ -14,3 +14,4 @@ class GetSearchMovieEvent extends SearchEvent {
 
   const GetSearchMovieEvent(this.title);
 }
+class ClearSearchEvent extends SearchEvent {}

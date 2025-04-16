@@ -3,13 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/services/service_locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'core/error/internetCheck.dart';
 import 'core/local/cache_helper.dart';
 import 'core/utilies/appStrings.dart';
 import 'core/utilies/themes.dart';
-import 'movie/presentation/controllers/mainScreen/bloc.dart';
-import 'movie/presentation/controllers/mainScreen/blocEvents.dart';
 import 'movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
 import 'movie/presentation/screens/splash_screen/splash_screen.dart';
 
@@ -33,22 +30,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) =>
-        ThemeModeCubit()
-          ..changeAppMode(fromShared: isDarkMode),
-        ),
-        BlocProvider(
-          create: (context) => MovieBloc(sl(),sl(),sl(),sl(),sl())
-            ..add(GetTrendMoviesEvent())
-            ..add(GetNowPlayingMoviesEvent())
-            ..add(GetPopularMoviesEvent())
-            ..add(GetTopRatedMoviesEvent())
-            ..add(GetUpComingMoviesEvent()),
-        ),
-
-      ],
+    return  BlocProvider(create: (context) =>
+    ThemeModeCubit()
+      ..changeAppMode(fromShared: isDarkMode),
+    
       child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
         builder: (context, state) =>
             MaterialApp(
