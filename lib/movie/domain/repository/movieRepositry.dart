@@ -12,6 +12,7 @@ import '../useCase/movieRecommendation_useCase.dart';
 
 abstract class BaseMovieRepository{
 
+  Future<Either<Failure,List<Movie>>> getTrend();
   Future<Either<Failure,List<Movie>>> getNowPlaying();
   Future<Either<Failure,List<Movie>>> getPopularPlaying();
   Future<Either<Failure,List<Movie>>> getTopRatedMovie();

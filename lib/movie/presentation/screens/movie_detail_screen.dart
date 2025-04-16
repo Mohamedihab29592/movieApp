@@ -28,14 +28,14 @@ class MovieDetailScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => sl<MovieDetailsBloc>()
+          create: (context) => MovieDetailsBloc(sl(),sl())
             ..add(GetMovieDetailsEvent(id))
             ..add(
               GetMovieRecommendationEvent(id),
             ),
 
         ),
-        BlocProvider(create: (context)=>sl<CastBloc>()..add(GetCastEvent(id)))
+        BlocProvider(create: (context)=>CastBloc(sl())..add(GetCastEvent(id)))
       ],
       child:  Scaffold(
         body: MovieDetailContent(id:id),

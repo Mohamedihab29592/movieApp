@@ -6,11 +6,13 @@ import 'package:movie_app/movie/data/models/movieModel.dart';
 import '../../../core/local/cache_helper.dart';
 
 abstract class BaseMovieDataLocalDataSource {
+  Future<List<MovieModel>> getTrendLocalData();
   Future<List<MovieModel>> getNowPlayingLocalData();
   Future<List<MovieModel>> getPopularLocalData();
   Future<List<MovieModel>> getTopRatedLocalData();
   Future<List<MovieModel>> getUpComingLocalData();
 
+  Future<void> cachedTrendLocalData({required  List<MovieModel>  movieModel});
   Future<void> cachedNowPlayingLocalData({required  List<MovieModel>  movieModel});
   Future<void> cachedPopularLocalData({required  List<MovieModel>  movieModel});
   Future<void> cachedTopRatedLocalData({required  List<MovieModel>  movieModel});
@@ -18,6 +20,17 @@ abstract class BaseMovieDataLocalDataSource {
 }
 
 class MovieDataLocalDataSourceImpl implements BaseMovieDataLocalDataSource {
+  @override
+  Future<List<MovieModel>> getTrendLocalData() {
+    final jsonString = CacheHelper.getData(key: 'cachedTrendLocalData');
+    if (jsonString != null) {
+      final cachedHomeData = List<MovieModel>.from(
+          (json.decode(jsonString)).map((e) => MovieModel.fromJson(e),));
+      return Future.value(cachedHomeData);
+    } else {
+      throw const LocalExceptions(message: "no data");
+    }
+  }
   @override
   Future<List<MovieModel>> getNowPlayingLocalData() {
     final jsonString = CacheHelper.getData(key: 'cachedNowPlayingLocalData');
@@ -68,6 +81,11 @@ class MovieDataLocalDataSourceImpl implements BaseMovieDataLocalDataSource {
     }
   }
   @override
+  Future<void> cachedTrendLocalData({required List<MovieModel> movieModel}) {
+    return CacheHelper.saveData(
+        key: 'cachedTrendLocalData', value: jsonEncode(movieModel.toList()));
+  }
+  @override
   Future<bool> cachedNowPlayingLocalData({required List<MovieModel> movieModel}) {
     return CacheHelper.saveData(
         key: 'cachedNowPlayingLocalData', value: jsonEncode(movieModel.toList()));
@@ -89,4 +107,8 @@ class MovieDataLocalDataSourceImpl implements BaseMovieDataLocalDataSource {
     return CacheHelper.saveData(
         key: 'cachedUpComingLocalData', value: jsonEncode(movieModel.toList()));
   }
+
+
+
+
 }

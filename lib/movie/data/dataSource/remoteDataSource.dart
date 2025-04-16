@@ -15,6 +15,7 @@ import 'package:movie_app/movie/domain/useCase/movieRecommendation_useCase.dart'
 import '../models/castModel.dart';
 
 abstract class BaseMovieRemoteDataSource{
+  Future<List<MovieModel>> getTrendMovies();
   Future<List<MovieModel>> getNowPlayingMovies();
   Future<List<MovieModel>> getPopularPlaying();
   Future<List<MovieModel>> getTopRatedMovie();
@@ -28,6 +29,20 @@ abstract class BaseMovieRemoteDataSource{
 
 
 class MovieRemoteDataSource extends BaseMovieRemoteDataSource {
+
+  @override
+  Future<List<MovieModel>> getTrendMovies() async{
+    final response = await Dio().get(AppConstants.trendPath);
+    if(response.statusCode== 200){
+      CacheHelper.saveData(key: "cachedTrendLocalData", value: response.data.toString());
+      return List<MovieModel>.from((response.data["results"]as List).map((e) => MovieModel.fromJson(e),));
+    }else
+    {
+      throw ServerExceptions(errorMessageModel: ErrorMessageModel.fromJson(response.data),);
+    }
+
+  }
+
   @override
   Future<List<MovieModel>> getNowPlayingMovies() async {
 final response = await Dio().get(AppConstants.nowPlayingPath);

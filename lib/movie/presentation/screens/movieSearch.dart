@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/services/service_locator.dart';
 import '../../../core/utilies/appStrings.dart';
-import '../../../core/utilies/colors.dart';
 import '../../../core/utilies/values_manger.dart';
 import '../controllers/search/search_bloc.dart';
+import '../widgets/search_textForm.dart';
 import '../widgets/movieSearch/movieSearchWidget.dart';
-import '../widgets/movieSearch/textForm.dart';
 
 class MovieSearch extends StatelessWidget {
   const MovieSearch({
@@ -17,7 +16,7 @@ class MovieSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<SearchBloc>(),
+      create: (context) => SearchBloc(sl()),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(AppStrings.search),
@@ -44,8 +43,9 @@ class SearchBody extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(AppSize.s20),
               child: Column(
+                spacing: 20,
                 children: [
-                  TextFormFiled(
+                  MyFormField(
                     controller: controller,
                     suffixIcon: IconButton(
                       onPressed: () {
@@ -59,7 +59,6 @@ class SearchBody extends StatelessWidget {
                       },
                       icon: const Icon(
                         Icons.search,
-                        color: AppColors.teal,
                       ),
                     ),
                   ),

@@ -40,7 +40,8 @@ class MyApp extends StatelessWidget {
           ..changeAppMode(fromShared: isDarkMode),
         ),
         BlocProvider(
-          create: (context) => sl<MovieBloc>()
+          create: (context) => MovieBloc(sl(),sl(),sl(),sl(),sl())
+            ..add(GetTrendMoviesEvent())
             ..add(GetNowPlayingMoviesEvent())
             ..add(GetPopularMoviesEvent())
             ..add(GetTopRatedMoviesEvent())
@@ -54,8 +55,8 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeModeCubit
                   .get(context)
                   .isDarkMode
-                  ? ThemeMode.dark
-                  : ThemeMode.light,
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
               darkTheme: AppThemes.darkMode,
               theme: AppThemes.lightMode,
               debugShowCheckedModeBanner: false,

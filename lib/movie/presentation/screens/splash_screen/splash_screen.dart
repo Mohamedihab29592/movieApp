@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../movies_screen.dart';
+import '../Layout.dart';
 
 
 
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _goNext() {
-Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MoviesScreen(context: context,)));  }
+Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Layout()));  }
 
   @override
   void initState() {

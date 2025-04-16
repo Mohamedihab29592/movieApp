@@ -1,14 +1,11 @@
 class AppStrings{
   ///Movie Module
   static const String appName = "Movie App";
-  static const String nowPlaying = "NOW PLAYING MOVIES";
+  static const String nowPlaying = "Now playing";
   static const String popular = "Popular";
-  static const String popularMovies = "Popular Movies";
-  static const String seeMore = "See More";
   static const String topRated = "Top Rated";
-  static const String topRatedMovies = "Top Rated Movies";
+  static const String trend = "Trend";
   static const String upComing = "UpComing";
-  static const String upComingMovies = "UpComing Movies";
   static const String genres = "Genres";
   static const String moreLikeThis = 'More like this';
   static const String noInternet = 'No Internet Connection';

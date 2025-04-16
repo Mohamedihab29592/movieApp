@@ -23,6 +23,31 @@ class MovieRepository extends BaseMovieRepository{
   final NetworkInfo networkInfo;
 
   MovieRepository(this.baseMovieRemoteDataSource, this.baseMovieDataLocalDataSource, this.networkInfo);
+
+  @override
+  Future<Either<Failure, List<Movie>>> getTrend() async{
+    if (await networkInfo.isConnected){
+      try {
+        final  result = await baseMovieRemoteDataSource.getTrendMovies();
+
+        await   baseMovieDataLocalDataSource.cachedTrendLocalData(movieModel:result);
+
+        return Right(result);
+      }on ServerExceptions catch (failure){
+        return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+      }
+    }else {
+      try{
+        final localHome = await baseMovieDataLocalDataSource.getNowPlayingLocalData();
+        return Right(localHome);
+      }
+      on LocalExceptions {
+        return const Left(DataBaseFailure(AppStrings.noData));
+      }
+
+
+    }
+  }
   @override
   Future<Either<Failure,List<Movie>>> getNowPlaying() async{
     if (await networkInfo.isConnected){
@@ -164,6 +189,8 @@ class MovieRepository extends BaseMovieRepository{
       return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
   }
+
+
 
 
 
