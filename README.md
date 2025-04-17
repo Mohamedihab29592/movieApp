@@ -28,19 +28,13 @@ I Have applied clean archeticture concept With MVVM archeticture
 ## Screenshots
 
 Here are some screeshots for the application:
-(Light Theme)
 
 <img src="https://user-images.githubusercontent.com/64233832/201532666-52d388ae-0ae7-4914-bad7-37b98dfb6dd2.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532658-87e54d8c-c8fa-41ec-9d21-0f3740073bf6.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533181-915d2307-111c-4111-a8ea-d1ae517fb19a.jpeg" width="300">|
 --- |---|---
 <img src="https://user-images.githubusercontent.com/64233832/201533241-efc50a66-d642-4686-b246-256d3c9d39dc.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533269-ed4bcd17-af22-430b-b611-be79cb83978a.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533278-49a8e1c9-9180-4243-96de-309d8fcb532c.jpeg" width="300">|
 --- |---|---
 
-(Dark Theme)
 
-<img src="https://user-images.githubusercontent.com/64233832/201533394-17da12ca-062a-4b54-a0b9-88219ed34ff9.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533400-40676bda-8543-4c9e-991b-ba599f61ee30.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533411-0eb8a7a6-bf78-43b6-8897-f938e5d924ed.jpeg" width="300">|
---- |---|---
-<img src="https://user-images.githubusercontent.com/64233832/201533430-89afafad-1e25-46ee-bdc7-a282f909fc4d.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533438-78a03013-9ed6-4b83-b263-f64361e02866.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533447-87cc678b-84ab-4ddd-9aed-7d5eaf275a22.jpeg" width="300">|
---- |---|---
 
 ## APK File
 https://drive.google.com/file/d/18_b-alWoIrDYz3kcz-L1hYeIMKj5lyZT/view?usp=sharing
