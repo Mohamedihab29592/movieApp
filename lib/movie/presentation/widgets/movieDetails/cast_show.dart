@@ -17,6 +17,15 @@ class GridCastView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
       builder: (context, state) {
+        if (state.cast==null || state.cast!.isEmpty){
+          return  const Center(
+            child: Text(
+              AppStrings.castListEmpty,
+              style: TextStyle(color: Colors.grey),
+            ),
+          );
+
+        }
         if (state.cast != null) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -98,7 +107,9 @@ class GridCastView extends StatelessWidget {
               ],
             ),
           );
-        } else {
+
+        }
+         else {
           return const Center(
             child: CircularProgressIndicator.adaptive(),
           );

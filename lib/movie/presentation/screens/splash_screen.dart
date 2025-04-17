@@ -1,12 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_app/core/utilies/assets.dart';
 
-import '../../../core/services/service_locator.dart';
-import '../controllers/mainScreen/bloc.dart';
-import '../controllers/search/search_bloc.dart';
 import 'Layout.dart';
 
 
@@ -27,13 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _goNext() {
-Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MultiBlocProvider(
-  providers: [
-    BlocProvider(create: (_) => MovieBloc(sl(), sl(), sl(), sl(), sl())),
-    BlocProvider(create: (_) => SearchBloc(sl())),
-  ],
-  child: const Layout(),
-)));  }
+Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Layout()));  }
 
   @override
   void initState() {

@@ -3,17 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/services/service_locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'core/error/internet_check.dart';
 import 'core/local/cache_helper.dart';
 import 'core/utilies/strings.dart';
 import 'core/utilies/themes.dart';
+import 'movie/presentation/controllers/mainScreen/bloc.dart';
 import 'movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
 import 'movie/presentation/screens/splash_screen.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await NetworkInfoImpl().checkInternet();
  SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   ServiceLocator().init();
@@ -34,6 +33,8 @@ class MyApp extends StatelessWidget {
       providers:[ BlocProvider(create: (context) =>
       ThemeModeCubit()
         ..changeAppMode(fromShared: isDarkMode)),
+
+        BlocProvider(create: (_) => MovieBloc(sl(), sl(), sl(), sl(), sl())),
 
       ],
         child: BlocBuilder<ThemeModeCubit, ThemeModeState>(

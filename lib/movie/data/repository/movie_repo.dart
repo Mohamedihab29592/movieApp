@@ -36,13 +36,14 @@ class MovieRepository extends BaseMovieRepository{
       }on ServerExceptions catch (failure){
         return Left(ServerFailure(failure.errorMessageModel.statusMessage));
       }
-    }else {
+    }
+    else {
       try{
         final localHome = await baseMovieDataLocalDataSource.getNowPlayingLocalData();
         return Right(localHome);
       }
       on LocalExceptions {
-        return const Left(DataBaseFailure(AppStrings.noData));
+        return const Left(DataBaseFailure(AppStrings.noInternet));
       }
 
 
@@ -66,7 +67,7 @@ class MovieRepository extends BaseMovieRepository{
         return Right(localHome);
       }
       on LocalExceptions {
-        return const Left(DataBaseFailure(AppStrings.noData));
+        return const Left(DataBaseFailure(AppStrings.noInternet));
       }
 
 
@@ -93,7 +94,7 @@ class MovieRepository extends BaseMovieRepository{
        return Right(localHome);
      }
      on LocalExceptions {
-       return const Left(DataBaseFailure(AppStrings.noData));
+       return const Left(DataBaseFailure(AppStrings.noInternet));
      }
 
 
@@ -118,7 +119,7 @@ class MovieRepository extends BaseMovieRepository{
       return Right(localHome);
     }
     on LocalExceptions {
-      return const Left(DataBaseFailure(AppStrings.noData));
+      return const Left(DataBaseFailure(AppStrings.noInternet));
     }
 
 
@@ -142,7 +143,7 @@ class MovieRepository extends BaseMovieRepository{
        return Right(localHome);
      }
      on LocalExceptions {
-       return const Left(DataBaseFailure(AppStrings.noData));
+       return const Left(DataBaseFailure(AppStrings.noInternet));
      }
 
 
@@ -150,22 +151,33 @@ class MovieRepository extends BaseMovieRepository{
   }
   @override
   Future<Either<Failure, List<Movie>>> getSearchMovie(MovieSearchParameter parameter)async {
-    final result = await baseMovieRemoteDataSource.getSearchMovie(parameter);
+    if(await networkInfo.isConnected) {
+      final result = await baseMovieRemoteDataSource.getSearchMovie(parameter);
+      try {
+        return Right(result);
+      } on ServerExceptions catch (failure) {
+        return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+      }
+    }else {
+      return const Left(ServerFailure(AppStrings.noInternet));
 
-    try {
-      return Right(result);
-    } on ServerExceptions catch (failure) {
-      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
     }
+
+
   }
 
   @override
   Future<Either<Failure, MovieDetails>> getMovieDetails(MovieDetailsParameter parameter) async{
-    final result = await baseMovieRemoteDataSource.getMovieDetails(parameter);
-    try {
-      return Right(result);
-    }on ServerExceptions catch (failure){
-      return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+    if(await networkInfo.isConnected) {
+      final result = await baseMovieRemoteDataSource.getMovieDetails(parameter);
+      try {
+        return Right(result);
+      } on ServerExceptions catch (failure) {
+        return Left(ServerFailure(failure.errorMessageModel.statusMessage));
+      }
+    }else {
+      return const Left(ServerFailure(AppStrings.noInternet));
+
     }
   }
 

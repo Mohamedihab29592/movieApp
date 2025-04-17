@@ -156,7 +156,7 @@ class WishlistBody extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      "Action", // Replace with actual genre when available
+                                     movie.genres[index].name,
                                       style: TextStyle(
                                         color: Colors.grey[400],
                                         fontSize: 14,
@@ -191,7 +191,7 @@ class WishlistBody extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      "139 minutes", // Replace with actual duration when available
+                                      "${movie.runtime.toString()} min",
                                       style: TextStyle(
                                         color: Colors.grey[400],
                                         fontSize: 14,
@@ -210,7 +210,6 @@ class WishlistBody extends StatelessWidget {
                             color: Colors.red,
                           ),
                           onPressed: () {
-                            // Dispatch event to remove item from wishlist
                             context.read<WishBloc>().add(RemoveFromWishListEvent(movieId: movie.id));
                           },
                         ),

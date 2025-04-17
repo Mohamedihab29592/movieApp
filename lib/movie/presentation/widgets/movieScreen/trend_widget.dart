@@ -3,9 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../core/error/internet_check.dart';
 import '../../../../core/utilies/colors.dart';
 import '../../../../core/utilies/constants.dart';
 import '../../../../core/utilies/enum.dart';
+import '../../../../core/utilies/toast.dart';
 import '../../../../core/utilies/values_manger.dart';
 import '../../controllers/mainScreen/bloc.dart';
 import '../../controllers/mainScreen/bloc_states.dart';
@@ -16,7 +18,14 @@ class TrendWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieBloc, MovieState>(
+    return BlocConsumer<MovieBloc, MovieState>(
+      listener: (context,state) async {
+        await NetworkInfoImpl().checkInternet();
+
+        if(state.trendState == RequestState.error) {
+          showToast(text: state.trendMessage, state: ToastStates.error);
+        }
+      },
       buildWhen: (previous, current) => previous.trendState != current.trendState,
       builder: (context, state) {
         final isLoading = state.trendState == RequestState.loading;

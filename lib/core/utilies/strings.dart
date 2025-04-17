@@ -30,6 +30,8 @@ class AppStrings{
   static const String detail = 'Detail';
   static const String watchList = 'Watch list';
   static const String watchListEmpty = 'Watch list is empty';
+  static const String reviewListEmpty = 'No reviews available';
+  static const String castListEmpty = 'No Cast available';
   static const String noSearch = '$noData to $search';
 
 }

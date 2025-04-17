@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utilies/strings.dart';
 import '../../../domain/entities/review.dart';
 
 class ReviewsWidget extends StatelessWidget {
@@ -13,9 +14,9 @@ class ReviewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (reviews.isEmpty) {
-      return const Center(
+      return  const Center(
         child: Text(
-          "No reviews available",
+          AppStrings.reviewListEmpty,
           style: TextStyle(color: Colors.grey),
         ),
       );

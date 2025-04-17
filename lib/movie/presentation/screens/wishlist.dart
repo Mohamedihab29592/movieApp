@@ -16,18 +16,16 @@ class WishList extends StatefulWidget {
 class _WishListState extends State<WishList> {
   @override
   Widget build(BuildContext context) {
-    return  BlocProvider(
-      create: (context) => WishBloc(sl(),sl(),sl())..add(GetWishListEvent()),
+    return          BlocProvider(create: (_) => WishBloc(sl(), sl(), sl())..add(GetWishListEvent()),
 
-
-      child: Scaffold(
+    child: Scaffold(
         appBar:  AppBar(
         elevation: 0,
         title: const Text(
           AppStrings.watchList,
         ),
         centerTitle: true,
-
+      
       ),
         body: const WishlistBody(),
       ),

@@ -50,7 +50,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> with SingleTicker
           ..add(GetCastEvent(widget.id))
           ..add(GetReviewEvent(widget.id))),
         BlocProvider(
-          create: (context) => WishBloc(sl(),sl(),sl())..add(GetWishListEvent()),
+          create: (context) => WishBloc(sl(),sl(),sl()),
 
         ),
         ],
@@ -71,6 +71,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> with SingleTicker
               BlocBuilder<WishBloc, WishState>(
                 builder: (context, wishlistState) {
                   return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+
                     builder: (context, movieState) {
                       final movieDetails = movieState.movieDetails;
                       final isInWishlist = wishlistState.wishList.any((m) => m.id == widget.id);
