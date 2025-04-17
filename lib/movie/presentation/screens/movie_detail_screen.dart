@@ -52,7 +52,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
               ..add(GetCastEvent(widget.id))
               ..add(GetReviewEvent(widget.id))),
         BlocProvider(
-          create: (context) => WishBloc(sl(), sl(), sl()),
+          create: (context) => WishBloc(sl(), sl(), sl())..add(GetWishListEvent()),
         ),
       ],
       child: Scaffold(
