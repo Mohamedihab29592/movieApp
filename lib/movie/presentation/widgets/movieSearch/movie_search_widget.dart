@@ -110,7 +110,7 @@ class MovieSearchWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: AppSize.s4),
                   Text(
-                    ("${movieSearch.voteAverage}/10"),
+                    ("${movieSearch.voteAverage.round()}/10"),
                     style: const TextStyle(
                       fontSize: AppSize.s16,
                       fontWeight: FontWeight.w500,
