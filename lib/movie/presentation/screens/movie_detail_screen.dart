@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/utilies/strings.dart';
 import 'package:movie_app/core/utilies/constants.dart';
+import 'package:movie_app/core/utilies/values_manger.dart';
 import '../../../core/services/service_locator.dart';
 import '../../../core/utilies/assets.dart';
 import '../../../core/utilies/colors.dart';
@@ -25,7 +26,8 @@ class MovieDetailScreen extends StatefulWidget {
   State<MovieDetailScreen> createState() => _MovieDetailScreenState();
 }
 
-class _MovieDetailScreenState extends State<MovieDetailScreen> with SingleTickerProviderStateMixin {
+class _MovieDetailScreenState extends State<MovieDetailScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -43,64 +45,65 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers:[
+      providers: [
         BlocProvider(
-        create: (context) => MovieDetailsBloc(sl(), sl(), sl())
-          ..add(GetMovieDetailsEvent(widget.id))
-          ..add(GetCastEvent(widget.id))
-          ..add(GetReviewEvent(widget.id))),
+            create: (context) => MovieDetailsBloc(sl(), sl(), sl())
+              ..add(GetMovieDetailsEvent(widget.id))
+              ..add(GetCastEvent(widget.id))
+              ..add(GetReviewEvent(widget.id))),
         BlocProvider(
-          create: (context) => WishBloc(sl(),sl(),sl()),
-
+          create: (context) => WishBloc(sl(), sl(), sl()),
         ),
-        ],
-        child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios)
-            ),
-            title: const Text(
-              AppStrings.detail,
-            ),
-            centerTitle: true,
-            actions: [
-              BlocBuilder<WishBloc, WishState>(
-                builder: (context, wishlistState) {
-                  return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-
-                    builder: (context, movieState) {
-                      final movieDetails = movieState.movieDetails;
-                      final isInWishlist = wishlistState.wishList.any((m) => m.id == widget.id);
-
-                      return IconButton(
-                        onPressed: () {
-                          if (movieDetails != null) {
-                            final wishBloc = context.read<WishBloc>();
-                            if (isInWishlist) {
-                              wishBloc.add(RemoveFromWishListEvent(movieId: widget.id));
-                            } else {
-                              wishBloc.add(AddToWishListEvent(movie: movieDetails));
-                            }
-                          }
-                        },
-                        icon: ImageIcon(
-                          isInWishlist? const AssetImage(Assets.wishListIconRe):const AssetImage(Assets.wishListIcon),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
+      ],
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_ios)),
+          title: const Text(
+            AppStrings.detail,
           ),
-          body: MovieDetailContent(id: widget.id, tabController: _tabController),
-        ),
-      );
+          centerTitle: true,
+          actions: [
+            BlocBuilder<WishBloc, WishState>(
+              builder: (context, wishlistState) {
+                return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+                  builder: (context, movieState) {
+                    final movieDetails = movieState.movieDetails;
+                    final isInWishlist =
+                        wishlistState.wishList.any((m) => m.id == widget.id);
 
+                    return IconButton(
+                      onPressed: () {
+                        if (movieDetails != null) {
+                          final wishBloc = context.read<WishBloc>();
+                          if (isInWishlist) {
+                            wishBloc.add(
+                                RemoveFromWishListEvent(movieId: widget.id));
+                          } else {
+                            wishBloc
+                                .add(AddToWishListEvent(movie: movieDetails));
+                          }
+                        }
+                      },
+                      icon: ImageIcon(
+                        isInWishlist
+                            ? const AssetImage(Assets.wishListIconRe)
+                            : const AssetImage(Assets.wishListIcon),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        body: MovieDetailContent(id: widget.id, tabController: _tabController),
+      ),
+    );
   }
 }
 
@@ -121,26 +124,28 @@ class MovieDetailContent extends StatelessWidget {
         switch (state.movieDetailsState) {
           case RequestState.loading:
             return const Center(
-              child: CircularProgressIndicator.adaptive(
-              ),
+              child: CircularProgressIndicator.adaptive(),
             );
           case RequestState.loaded:
             return Column(
               children: [
-                _buildMovieHeader(state),
-
+                _buildMovieHeader(state,context),
+                const SizedBox(
+                  height: AppSize.s90,
+                ),
+                _infoRow(state),
+                const SizedBox(height: 10),
                 _buildTabBar(),
                 Expanded(
                   child: TabBarView(
                     controller: tabController,
                     children: [
-                      AboutMovieWidget(state:state),
-                      ReviewsWidget(reviews:state.movieReview),
+                      AboutMovieWidget(state: state),
+                      ReviewsWidget(reviews: state.movieReview),
                       GridCastView(id: id),
                     ],
                   ),
                 ),
-
               ],
             );
           case RequestState.error:
@@ -155,13 +160,13 @@ class MovieDetailContent extends StatelessWidget {
     );
   }
 
-  Widget _buildMovieHeader(MovieDetailsState state) {
+  Widget _buildMovieHeader(MovieDetailsState state,BuildContext context) {
     return Stack(
+      clipBehavior: Clip.none,
       alignment: Alignment.bottomLeft,
       children: [
         Container(
-          height: 240,
-          width: double.infinity,
+          height: AppSize.s200,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
@@ -182,101 +187,31 @@ class MovieDetailContent extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Movie poster
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  width: 100,
-                  height: 140,
-                  decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 10,
-                        offset: Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: AppConstants.imageUrl(state.movieDetails!.posterPath),
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(
-                      color: Colors.grey[800],
-                    ),
-                    errorWidget: (context, url, error) => const Icon(
-                      Icons.error,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: AppColors.rateColor),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                child: Row(
                   children: [
+                    const Icon(
+                      Icons.star_border,
+                      color: Colors.orange,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 4),
                     Text(
-                      state.movieDetails!.title,
+                      state.movieDetails!.voteAverage.toStringAsFixed(1),
                       style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 16,
+                        color: Colors.orange,
                         fontWeight: FontWeight.bold,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Text(
-                          state.movieDetails!.releaseDate.split('-')[0],
-                          style: TextStyle(
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        const Icon(
-                          Icons.access_time,
-                          color: Colors.grey,
-                          size: 16,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          _showDuration(state.movieDetails!.runtime),
-                          style: TextStyle(
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Text(
-                          _showGenreShort(state.movieDetails!.genres),
-                          style: TextStyle(
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 16,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          state.movieDetails!.voteAverage.toStringAsFixed(1),
-                          style: const TextStyle(
-                            color: Colors.amber,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -284,22 +219,119 @@ class MovieDetailContent extends StatelessWidget {
             ],
           ),
         ),
+        Positioned(
+          bottom: -80,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    width: AppSize.s100,
+                    height: AppSize.s150,
+                    decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          AppConstants.imageUrl(state.movieDetails!.posterPath),
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[800],
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+
+                  child: Text(
+                    state.movieDetails!.title,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
 
+  Widget _infoRow(MovieDetailsState state)
+  {
+    return  Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(
+          Icons.calendar_today,
+          size: 16,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          state.movieDetails!.releaseDate.split('-')[0],
+
+        ),
+        const SizedBox(width: 10),
+
+        Container(width: 1, height: 14, color: Colors.grey[500]), // Divider
+
+        const SizedBox(width: 10),
+        const Icon(
+          Icons.access_time,
+          size: 16,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          _showDuration(state.movieDetails!.runtime),
+
+        ),
+        const SizedBox(width: 10),
+
+        Container(width: 1, height: 14, color: Colors.grey[500]), // Divider
+
+        const SizedBox(width: 10),
+        const Icon(
+          Icons.movie_outlined,
+          size: 16,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          _showGenreShort(state.movieDetails!.genres),
+
+        ),
+      ],
+    );
+  }
   Widget _buildTabBar() {
     return TabBar(
       dividerColor: Colors.transparent,
-
       controller: tabController,
-      labelColor: Colors.white,
       indicatorColor: AppColors.softGrey,
-      indicatorSize: TabBarIndicatorSize.tab,
-      tabs:  const [
-        Tab(text: AppStrings.about),
-        Tab(text:  AppStrings.reviews),
-        Tab(text:  AppStrings.cast),
+      indicatorSize: TabBarIndicatorSize.label,
+      tabs: const [
+        Tab(
+          text: AppStrings.about,
+        ),
+        Tab(text: AppStrings.reviews),
+        Tab(text: AppStrings.cast),
       ],
     );
   }
@@ -319,6 +351,4 @@ class MovieDetailContent extends StatelessWidget {
     if (genres.isEmpty) return '';
     return genres.first.name;
   }
-
 }
-

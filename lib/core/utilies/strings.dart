@@ -32,6 +32,7 @@ class AppStrings{
   static const String watchListEmpty = 'Watch list is empty';
   static const String reviewListEmpty = 'No reviews available';
   static const String castListEmpty = 'No Cast available';
+  static const String aboutEmpty = 'No Data available';
   static const String noSearch = '$noData to $search';
 
 }

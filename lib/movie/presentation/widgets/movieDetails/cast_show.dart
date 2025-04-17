@@ -17,7 +17,7 @@ class GridCastView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
       builder: (context, state) {
-        if (state.cast==null || state.cast!.isEmpty){
+        if (state.cast.isEmpty){
           return  const Center(
             child: Text(
               AppStrings.castListEmpty,
@@ -26,7 +26,6 @@ class GridCastView extends StatelessWidget {
           );
 
         }
-        if (state.cast != null) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -50,7 +49,7 @@ class GridCastView extends StatelessWidget {
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                     ),
-                    itemCount: state.cast!.length,
+                    itemCount: state.cast.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -85,12 +84,12 @@ class GridCastView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              imageUrl: AppConstants.imageUrl(state.cast![index].image!),
+                              imageUrl: AppConstants.imageUrl(state.cast[index].image!),
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            state.cast![index].name,
+                            state.cast[index].name,
                             style: const TextStyle(
                               color: Colors.white,
                               overflow: TextOverflow.ellipsis,
@@ -108,12 +107,8 @@ class GridCastView extends StatelessWidget {
             ),
           );
 
-        }
-         else {
-          return const Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
-        }
+
+
       },
     );
   }

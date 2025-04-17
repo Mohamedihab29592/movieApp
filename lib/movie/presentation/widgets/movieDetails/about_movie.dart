@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utilies/strings.dart';
 import '../../controllers/movieDetails/movie_details_state.dart';
 
 class AboutMovieWidget extends StatelessWidget {
@@ -12,14 +13,25 @@ class AboutMovieWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        state.movieDetails!.overView,
-        style: TextStyle(
-          color: Colors.grey[300],
-          fontSize: 20,
-          height: 1.5,
+    if(state.movieReview.isEmpty)
+      {
+        return  const Center(
+          child: Text(
+            AppStrings.aboutEmpty,
+            style: TextStyle(color: Colors.grey,),
+          ),
+        );
+      }
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          state.movieDetails!.overView,
+          style: const TextStyle(
+            fontSize: 20,
+            height: 1.5,
+          ),
         ),
       ),
     );

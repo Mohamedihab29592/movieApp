@@ -62,6 +62,7 @@ class MoviesScreen extends StatelessWidget {
             child: Form(
               key: formKey,
               child: const SingleChildScrollView(
+                physics:  BouncingScrollPhysics(),
                 child: Column(
                   spacing: 20,
                   children: [

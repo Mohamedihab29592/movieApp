@@ -24,7 +24,6 @@ class WishlistBody extends StatelessWidget {
           return Center(
             child: Text(
               state.wishMessage,
-              style: const TextStyle(color: Colors.white),
             ),
           );
         }
@@ -36,20 +35,18 @@ class WishlistBody extends StatelessWidget {
         }
 
         if (state.wishList.isEmpty) {
-          return Center(
+          return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   Icons.bookmark_border,
-                  size: 100,
-                  color: Colors.grey[700],
+                  size: AppSize.s100,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Text(
                   AppStrings.watchListEmpty,
                   style: TextStyle(
-                    color: Colors.grey[400],
                     fontSize: 18,
                   ),
                 ),
@@ -99,8 +96,8 @@ class WishlistBody extends StatelessWidget {
                               baseColor: Colors.grey[850]!,
                               highlightColor: Colors.grey[800]!,
                               child: Container(
-                                width: 80,
-                                height: 120,
+                                width: AppSize.s80,
+                                height: AppSize.s120,
                                 color: Colors.black,
                               ),
                             ),
@@ -119,7 +116,6 @@ class WishlistBody extends StatelessWidget {
                                 Text(
                                   movie.title,
                                   style: const TextStyle(
-                                    color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -131,16 +127,16 @@ class WishlistBody extends StatelessWidget {
                                 Row(
                                   children: [
                                     const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 16,
+                                      Icons.star_border,
+                                      color: Colors.orange,
+                                      size: 20,
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
                                       movie.voteAverage.toStringAsFixed(1),
                                       style: const TextStyle(
-                                        color: Colors.amber,
-                                        fontSize: 14,
+                                        color: Colors.orange,
+                                        fontSize: 15,
                                       ),
                                     ),
                                   ],
@@ -151,14 +147,12 @@ class WishlistBody extends StatelessWidget {
                                   children: [
                                     const Icon(
                                       Icons.movie_outlined,
-                                      color: Colors.grey,
                                       size: 16,
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
                                      movie.genres[index].name,
-                                      style: TextStyle(
-                                        color: Colors.grey[400],
+                                      style: const TextStyle(
                                         fontSize: 14,
                                       ),
                                     ),
@@ -168,32 +162,27 @@ class WishlistBody extends StatelessWidget {
                                 // Year and Duration
                                 Row(
                                   children: [
-                                    // Year
-                                    Icon(
+                                    const Icon(
                                       Icons.calendar_today,
-                                      color: Colors.grey[400],
                                       size: 16,
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      movie.releaseDate.substring(0, 4), // Extract year from date
-                                      style: TextStyle(
-                                        color: Colors.grey[400],
+                                      movie.releaseDate.substring(0, 4),
+                                      style: const TextStyle(
                                         fontSize: 14,
                                       ),
                                     ),
                                     const SizedBox(width: 16),
                                     // Duration
-                                    Icon(
+                                    const Icon(
                                       Icons.access_time,
-                                      color: Colors.grey[400],
                                       size: 16,
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
                                       "${movie.runtime.toString()} min",
-                                      style: TextStyle(
-                                        color: Colors.grey[400],
+                                      style: const TextStyle(
                                         fontSize: 14,
                                       ),
                                     ),

@@ -17,7 +17,7 @@ class MovieDetailsState extends Equatable {
   final String movieReviewMessage;
 
 
-  final List<Cast>? cast;
+  final List<Cast> cast;
   final RequestState castState;
   final String castMessage;
 
@@ -30,7 +30,7 @@ class MovieDetailsState extends Equatable {
    this.movieReviewState = RequestState.loading,
    this.movieReviewMessage=AppStrings.noData,
 
-   this.cast,
+   this.cast= const[],
    this.castState = RequestState.loading,
    this.castMessage=AppStrings.noData,
 

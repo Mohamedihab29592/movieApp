@@ -77,7 +77,7 @@ class SearchBody extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
-                        itemCount: state.movie.length,
+                        itemCount: isMain ?state.movie.length:2,
                         itemBuilder: (context, index) {
                           final movie = state.movie[index];
                           return MovieSearchWidget(movieSearch: movie);

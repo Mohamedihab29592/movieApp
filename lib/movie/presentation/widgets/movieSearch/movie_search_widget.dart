@@ -38,8 +38,8 @@ class MovieSearchWidget extends StatelessWidget {
                 borderRadius: const BorderRadius.all(
                     Radius.circular(AppSize.s8)),
                 child: CachedNetworkImage(
-                  height: 200,
-                  width: 100,
+                  height: 150,
+                  width: 170,
                   fit: BoxFit.cover,
                   imageUrl: AppConstants.imageUrl(
                       movieSearch.backdropPath!),
@@ -67,7 +67,7 @@ class MovieSearchWidget extends StatelessWidget {
             CrossAxisAlignment.start,
             children: [
               SizedBox(
-                  width: size.width /2,
+                  width: size.width /3,
                   child: Text(
                     movieSearch.title,
                     style: const TextStyle(
