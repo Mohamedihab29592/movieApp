@@ -47,5 +47,5 @@ https://drive.google.com/file/d/18_b-alWoIrDYz3kcz-L1hYeIMKj5lyZT/view?usp=shari
 
 ## Demo Video
 
-[▶️ Watch Demo Video on OneDrive](https://drive.google.com/file/d/1499pnMlIEWs_gvVF1oVrFe6sSd_tdF1q/view?usp=drive_link)
+[▶️ Watch Demo Video on OneDrive](https://drive.google.com/file/d/1_2Za_DnbNOH20EB0BJSfbhufRNRvMGD3/view?usp=drive_link)
 
