@@ -151,7 +151,7 @@ class WishlistBody extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                     movie.genres[index].name,
+                                     movie.genres.last.name,
                                       style: const TextStyle(
                                         fontSize: 14,
                                       ),
