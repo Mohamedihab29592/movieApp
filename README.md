@@ -47,5 +47,4 @@ https://drive.google.com/file/d/18_b-alWoIrDYz3kcz-L1hYeIMKj5lyZT/view?usp=shari
 
 ## Demo Video
 
-https://user-images.githubusercontent.com/64233832/201553598-479a3eae-97b8-4c35-8b5e-a299bb9f5c91.mp4
-
+[▶️ Watch Demo Video on OneDrive](https://drive.google.com/file/d/1499pnMlIEWs_gvVF1oVrFe6sSd_tdF1q/view?usp=drive_link)
