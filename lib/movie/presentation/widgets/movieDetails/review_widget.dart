@@ -24,8 +24,6 @@ class ReviewsWidget extends StatelessWidget {
 
     return ListView.builder(
       itemCount: reviews.length,
-      shrinkWrap: true, // Add this to work inside other scrollable widgets
-      physics: const NeverScrollableScrollPhysics(), // Add this if inside a ScrollView
       itemBuilder: (context, index) {
         final review = reviews[index];
         return Card(
