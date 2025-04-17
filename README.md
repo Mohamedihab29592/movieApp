@@ -35,12 +35,9 @@ Here are some screeshots for the application:
   <img src="https://github.com/user-attachments/assets/ef35a191-f640-4a30-8cda-9cfa35d35068" width="300"/>
   <img src="https://github.com/user-attachments/assets/ca181f8a-1458-4021-9fc7-57de1f1402e4" width="300"/>
   <img src="https://github.com/user-attachments/assets/d57341d4-4d3a-4704-b1a4-c0c8159e8b31" width="300"/>
-
-</p>
-
-<p align="center">
   <img src="https://github.com/user-attachments/assets/f3ef5ab8-de25-4a4c-850d-ab44c9e4c8c6" width="300"/>
 </p>
+
 
 
 
