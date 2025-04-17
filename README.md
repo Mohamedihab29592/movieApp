@@ -28,12 +28,19 @@ I Have applied clean archeticture concept With MVVM archeticture
 ## Screenshots
 
 
+
 Here are some screeshots for the application:
 
-<img src="![WhatsApp Image 2025-04-17 at 14 55 56]https://github.com/user-attachments/assets/697113b2-d337-43fb-9d90-7d558b87681a" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201532658-87e54d8c-c8fa-41ec-9d21-0f3740073bf6.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533181-915d2307-111c-4111-a8ea-d1ae517fb19a.jpeg" width="300">|
---- |---|---
-<img src="https://user-images.githubusercontent.com/64233832/201533241-efc50a66-d642-4686-b246-256d3c9d39dc.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533269-ed4bcd17-af22-430b-b611-be79cb83978a.jpeg" width="300">|<img src="https://user-images.githubusercontent.com/64233832/201533278-49a8e1c9-9180-4243-96de-309d8fcb532c.jpeg" width="300">|
---- |---|---
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ef35a191-f640-4a30-8cda-9cfa35d35068" width="300"/>
+  <img src="https://github.com/user-attachments/assets/d57341d4-4d3a-4704-b1a4-c0c8159e8b31" width="300"/>
+  <img src="https://github.com/user-attachments/assets/ca181f8a-1458-4021-9fc7-57de1f1402e4" width="300"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f3ef5ab8-de25-4a4c-850d-ab44c9e4c8c6" width="300"/>
+</p>
+
 
 
 
