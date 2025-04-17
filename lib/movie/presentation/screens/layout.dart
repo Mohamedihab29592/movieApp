@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/movie/presentation/screens/wishlist.dart';
-import '../../../core/services/service_locator.dart';
+import '../../../core/utilies/assets.dart';
+import '../../../core/utilies/strings.dart';
 import '../controllers/mainScreen/bloc.dart';
-import '../controllers/mainScreen/blocEvents.dart';
-import '../controllers/search/search_bloc.dart';
-import 'movieSearch.dart';
+import '../controllers/mainScreen/bloc_events.dart';
+import 'movie_search.dart';
 import 'movies_screen.dart';
 
 class Layout extends StatefulWidget {
-
-  const Layout({super.key, });
+  const Layout({super.key});
 
   @override
   State<Layout> createState() => _LayoutState();
@@ -20,10 +19,35 @@ class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-     MoviesScreen(),
+    const MoviesScreen(),
     const MovieSearch(),
     const WishList(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final movieBloc = context.read<MovieBloc>();
+      movieBloc.add(GetTrendMoviesEvent());
+      movieBloc.add(GetNowPlayingMoviesEvent());
+
+
+
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (mounted) {
+          movieBloc.add(GetTopRatedMoviesEvent());
+          movieBloc.add(GetUpComingMoviesEvent());
+        }
+      });
+
+      Future.delayed(const Duration(milliseconds: 400), () {
+        if (mounted) {
+          movieBloc.add(GetPopularMoviesEvent());
+        }
+      });
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -33,50 +57,27 @@ class _LayoutState extends State<Layout> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-
-      providers: [
-
-        BlocProvider(
-        create: (context) => MovieBloc(sl(),sl(),sl(),sl(),sl())
-          ..add(GetTrendMoviesEvent())
-          ..add(GetNowPlayingMoviesEvent())
-          ..add(GetPopularMoviesEvent())
-          ..add(GetTopRatedMoviesEvent())
-          ..add(GetUpComingMoviesEvent()),
-
-
-      ),
-
-        BlocProvider(
-          create: (context) => SearchBloc(sl()),
-
-        )
-      ],
-      child:  Scaffold(
-
+    return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-
-
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: ImageIcon(AssetImage(Assets.homeIcon)),
+            label: AppStrings.home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: ImageIcon(AssetImage(Assets.searchIcon)),
+            label: AppStrings.search,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.panorama_wide_angle_sharp),
-            label: 'Wish list',
+            icon: ImageIcon(AssetImage(Assets.wishListIcon)),
+            label: AppStrings.wishList,
           ),
         ],
       ),
-    ),
     );
   }
 }
+

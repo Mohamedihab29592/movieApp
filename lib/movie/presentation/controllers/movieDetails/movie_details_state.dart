@@ -1,29 +1,38 @@
 
  import 'package:equatable/equatable.dart';
+import 'package:movie_app/movie/domain/entities/review.dart';
 
-import '../../../../core/utilies/appStrings.dart';
+import '../../../../core/utilies/strings.dart';
 import '../../../../core/utilies/enum.dart';
+import '../../../domain/entities/cast.dart';
 import '../../../domain/entities/movies_detail.dart';
-import '../../../domain/entities/recommendation.dart';
 
 class MovieDetailsState extends Equatable {
   final MovieDetails? movieDetails;
   final RequestState movieDetailsState;
   final String movieDetailsMessage;
 
-  final List<Recommendation> movieRecommendation;
-  final RequestState movieRecommendationState;
-  final String movieRecommendationMessage;
+  final List<Review> movieReview;
+  final RequestState movieReviewState;
+  final String movieReviewMessage;
 
+
+  final List<Cast>? cast;
+  final RequestState castState;
+  final String castMessage;
 
  const MovieDetailsState({
    this.movieDetails,
      this.movieDetailsState = RequestState.loading,
      this.movieDetailsMessage=AppStrings.noData,
 
-   this.movieRecommendation= const[],
-   this.movieRecommendationState = RequestState.loading,
-   this.movieRecommendationMessage=AppStrings.noData,
+   this.movieReview= const[],
+   this.movieReviewState = RequestState.loading,
+   this.movieReviewMessage=AppStrings.noData,
+
+   this.cast,
+   this.castState = RequestState.loading,
+   this.castMessage=AppStrings.noData,
 
  });
 
@@ -32,9 +41,13 @@ class MovieDetailsState extends Equatable {
     final RequestState? movieDetailsState,
     final String? movieDetailsMessage,
 
-    final List<Recommendation>? movieRecommendation,
-    final RequestState? movieRecommendationState,
-    final String? movieRecommendationMessage,
+    final List<Review>? movieReview,
+    final RequestState? movieReviewState,
+    final String? movieReviewMessage,
+
+    final List<Cast>? cast,
+    final RequestState? castState,
+    final String? castMessage,
  })
 {
   return  MovieDetailsState(
@@ -42,15 +55,19 @@ class MovieDetailsState extends Equatable {
     movieDetailsState: movieDetailsState ?? this.movieDetailsState,
     movieDetailsMessage: movieDetailsMessage ?? this.movieDetailsMessage,
 
-    movieRecommendation: movieRecommendation??this.movieRecommendation,
-    movieRecommendationState: movieRecommendationState ?? this.movieRecommendationState,
-    movieRecommendationMessage: movieRecommendationMessage ?? this.movieRecommendationMessage,
+    movieReview: movieReview??this.movieReview,
+    movieReviewState: movieReviewState ?? this.movieReviewState,
+    movieReviewMessage: movieReviewMessage ?? this.movieReviewMessage,
+
+    cast: cast??this.cast,
+    castMessage: castMessage ?? this.castMessage,
+    castState: castState ?? this.castState,
 
   );
 }
 
 @override
-  List<Object?> get props => [movieDetails,movieDetailsState,movieDetailsMessage,movieRecommendation,movieRecommendationState,movieRecommendationMessage];
+  List<Object?> get props => [movieDetails,movieDetailsState,movieDetailsMessage,movieReview,movieReviewState,movieReviewMessage,cast,castMessage,castState];
 }
 
 

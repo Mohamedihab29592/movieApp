@@ -1,16 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/core/useCase/useCase.dart';
+import 'package:movie_app/core/useCase/use_case.dart';
 import 'package:movie_app/core/utilies/enum.dart';
-import 'package:movie_app/movie/domain/useCase/getPopularPlaying_useCase.dart';
-import 'package:movie_app/movie/domain/useCase/getTopRated_useCase.dart';
-import 'package:movie_app/movie/domain/useCase/getTrendUseCase.dart';
-import 'package:movie_app/movie/domain/useCase/nowPlaying_useCase.dart';
-
-import '../../../domain/useCase/upComingUseCase.dart';
-import 'blocEvents.dart';
-import 'blocStates.dart';
+import 'package:movie_app/movie/domain/useCase/get_popular_usecase.dart';
+import 'package:movie_app/movie/domain/useCase/get_toprated_usecase.dart';
+import 'package:movie_app/movie/domain/useCase/get_trend_usecase.dart';
+import 'package:movie_app/movie/domain/useCase/now_playing_usecase.dart';
+import '../../../domain/useCase/up_coming_usecase.dart';
+import 'bloc_events.dart';
+import 'bloc_states.dart';
 
 class MovieBloc extends Bloc<MovieEvents, MovieState> {
 
@@ -20,14 +18,16 @@ class MovieBloc extends Bloc<MovieEvents, MovieState> {
   final GetTopRatedUseCase getTopRatedUseCase;
   final GetUpComingUseCase getUpComingUseCase;
 
+
   MovieBloc(this.getTrendUseCase,this.getNowPlayingUseCase, this.getPopularUseCase,
-      this.getTopRatedUseCase, this.getUpComingUseCase)
+      this.getTopRatedUseCase, this.getUpComingUseCase,)
       : super( const MovieState()) {
     on<GetTrendMoviesEvent>(_getTrendMovies);
     on<GetNowPlayingMoviesEvent>(_getNowPlayingMovies);
     on<GetPopularMoviesEvent>(_getPopularMovies);
     on<GetTopRatedMoviesEvent>(_getTopRatedMovies);
     on<GetUpComingMoviesEvent>(_getUpComingMovies);
+
   }
   FutureOr<void> _getTrendMovies(GetTrendMoviesEvent event, Emitter<MovieState> emit) async {
     final result = await getTrendUseCase(const NoParameters());
@@ -80,4 +80,8 @@ class MovieBloc extends Bloc<MovieEvents, MovieState> {
         )));
   }
 
+
 }
+
+
+

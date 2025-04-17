@@ -1,4 +1,4 @@
-import 'package:movie_app/core/network/errorMessageModel.dart';
+import 'package:movie_app/core/network/error_message_model.dart';
 
 class ServerExceptions implements Exception
 {

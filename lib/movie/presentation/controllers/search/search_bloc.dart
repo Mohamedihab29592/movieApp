@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/entities/movie.dart';
 
 
-import '../../../domain/useCase/getSearchUseCase.dart';
+import '../../../domain/useCase/get_search_usecase.dart';
 import 'package:equatable/equatable.dart';
 
 part 'search_event.dart';

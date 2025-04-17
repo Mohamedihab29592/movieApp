@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/services/service_locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'core/error/internetCheck.dart';
+import 'core/error/internet_check.dart';
 import 'core/local/cache_helper.dart';
-import 'core/utilies/appStrings.dart';
+import 'core/utilies/strings.dart';
 import 'core/utilies/themes.dart';
 import 'movie/presentation/controllers/themeMode/theme_mode_cubit.dart';
-import 'movie/presentation/screens/splash_screen/splash_screen.dart';
+import 'movie/presentation/screens/splash_screen.dart';
 
 
 void main() async {
@@ -30,26 +30,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BlocProvider(create: (context) =>
-    ThemeModeCubit()
-      ..changeAppMode(fromShared: isDarkMode),
-    
-      child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
-        builder: (context, state) =>
-            MaterialApp(
-              themeMode: ThemeModeCubit
-                  .get(context)
-                  .isDarkMode
-                  ? ThemeMode.light
-                  : ThemeMode.dark,
-              darkTheme: AppThemes.darkMode,
-              theme: AppThemes.lightMode,
-              debugShowCheckedModeBanner: false,
-              title: AppStrings.appName,
-              home: const SplashScreen(),
-            ),
-      ),
-    );
+    return  MultiBlocProvider(
+      providers:[ BlocProvider(create: (context) =>
+      ThemeModeCubit()
+        ..changeAppMode(fromShared: isDarkMode)),
+
+      ],
+        child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
+          builder: (context, state) =>
+              MaterialApp(
+                themeMode: ThemeModeCubit
+                    .get(context)
+                    .isDarkMode
+                    ? ThemeMode.light
+                    : ThemeMode.dark,
+                darkTheme: AppThemes.darkMode,
+                theme: AppThemes.lightMode,
+                debugShowCheckedModeBanner: false,
+                title: AppStrings.appName,
+                home: const SplashScreen(),
+              ),
+        ),
+      );
+
   }
 }
 

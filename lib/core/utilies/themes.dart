@@ -37,7 +37,7 @@ class AppThemes {
         fontWeight: FontWeight.bold,
       ),
       iconTheme: IconThemeData(
-        color: AppColors.blue,
+        color: AppColors.white,
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
@@ -110,7 +110,7 @@ class AppThemes {
         fontWeight: FontWeight.bold,
       ),
       iconTheme: IconThemeData(
-        color: AppColors.blue,
+        color: AppColors.black,
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
